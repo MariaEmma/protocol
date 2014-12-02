@@ -29,6 +29,12 @@ class File extends DataMapper {
 function getMaxId(){
         return $this->select_max('id')->get()->id;
     }
+    function getSentFilesOfUser($usrid){
+        return $this->where('user_id',$usrid)->get();
+    }
+    function getFileReceiver(){
+        return $this->user->get();
+    }
 
 }
 

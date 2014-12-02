@@ -21,7 +21,8 @@ class Suserfiles extends MY_Controller {
             redirect('backend/suser/input/'.$data['user']->id);
         }
         $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getUserFiles();
+        $data['eggrafes'] = $bs->getUserAllFiles();
+        
         $this->load->view('suserfiles/sidebar',$data);
         $this->load->view('suserfiles/input',$data); 
 	}
@@ -94,46 +95,51 @@ class Suserfiles extends MY_Controller {
      public function output($id)
 	{ 
         require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");
-        $data['mtitle'] = 'Ενέργειες Γραμματείας - Πρωτοκολλημένα αρχεία';
+        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+        $data['mtitle'] = 'Απεσταλμένα αρχεία';
         $bs = new User($id); 
         if($id != $data['user']->id){
             $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-            redirect('backend/gram/certified/'.$data['user']->id);
+            redirect('backend/suser/output/'.$data['user']->id);
         }
         $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getProtocolUserFiles();
-        $this->load->view('gramfiles/sidebar',$data);
-        $this->load->view('gramfiles/gramcertified');
+        $files = new File();
+        $data['eggrafes'] = $files->getSentFilesOfUser($bs->id);
+        $this->load->view('suserfiles/sidebar',$data);
+        $this->load->view('suserfiles/output');
 	}
     
 
      public function delete($id)
 	{ 
          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");             
+         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");             
             if((int)$id > 0){
                 $bs = new File($id);
-                
-            if($bs->is_protocol == 1) {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αρχείο δεν μπορεί να σβήσει!</div>');
-                redirect('backend/gram/myown/'.$data['user']->id);
-                }
-            if($bs->user_id == $data['user']->id){
-                if (isset($bs->upload_file))
-                    {
+                if($bs->user_id == $data['user']->id){
+                    if($bs->is_protocol == 0) {
+                         if (isset($bs->upload_file))
+                        {
                         $bpath = MY_FILEPATH;
                         unlink($bpath.$bs->upload_file);
+                        }
+                        $bs->delete();
+                        $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>'); 
                     }
-            $bs->delete();
-            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>'); 
-            }
+                    else {
+                $bs->user_id;
+      
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>');
+                redirect('backend/suser/output/'.$data['user']->id);
+                }
+            
+              }
             else
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα διαγραφής γι αυτό το αρχείο!</div>');
             } else {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
             }      
-         redirect('backend/gram/myown/'.$data['user']->id);
+         redirect('backend/suser/output/'.$data['user']->id);
 	} 
         
         
