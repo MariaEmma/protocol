@@ -3,7 +3,15 @@
 class User extends DataMapper {
    
     var $has_one = array('usertype');
-    var $has_many = array('file');
+    var $has_many = array(
+        'file' => array(			
+            'class' => 'file',			
+            'other_field' => 'user',		
+            'join_self_as' => 'user',		
+            'join_other_as' => 'file',		
+            'join_table' => 'user_files'),
+    );
+
     var $table = 'users';
     var $validation = array(
         'username' => array(
@@ -100,6 +108,9 @@ class User extends DataMapper {
     }
     function getSchoolUsers(){
         return $this->where('usertype_id',6)->order_by("firstname")->get();
+    }
+    function getUserProtocol(){
+        return $this->where('usertype_id',3)->get();
     }
 }
 

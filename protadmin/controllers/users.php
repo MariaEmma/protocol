@@ -214,12 +214,12 @@ class Users extends MY_Controller {
                     redirect('/backend/admin');
                     } 
                     
-                $det = new File();
-                $nofiles2 = $det->getUserOwnFiles($bs->id)->result_count();
-                if($nofiles2 > 0){
-                    $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>O χρήστης έχει χρεωθεί αρχεία. Πρέπει να πάψει η ανάθεση του σε αυτά για να μπορέσει να διαγραφεί.</div>');
-                    redirect('/backend/admin');
-                    }
+//                $det = new File();
+//                $nofiles2 = $det->getUserOwnFiles($bs->id)->result_count();
+//                if($nofiles2 > 0){
+//                    $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>O χρήστης έχει χρεωθεί αρχεία. Πρέπει να πάψει η ανάθεση του σε αυτά για να μπορέσει να διαγραφεί.</div>');
+//                    redirect('/backend/admin');
+//                    }
             
             if($bs->usertype_id == 1 || $bs->usertype_id == 3 || $bs->usertype_id == 4) {
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>O διαχειριστής, ο πρόεδρος και το πρωτόκολλο δε μπορούν να διαγραφούν!</div>');

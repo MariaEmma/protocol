@@ -50,6 +50,7 @@ class Gramfiles extends MY_Controller {
                 $tempu->description = $this->input->post('description');      
                 $tempu->user_id = $id;
                 $tempu->created_date = date("Y-m-d H:i:s"); 
+                $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
                 
          //start upload
                 $config['upload_path'] = MY_FILEPATH;

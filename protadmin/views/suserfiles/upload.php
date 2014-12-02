@@ -7,8 +7,8 @@
                     <div class="panel-heading">Αποστολή Αρχείου
                     </div>
                     <div class="panel-body">
-                         <?php $attributes = array('id' => 'filenewform'); ?>
-                         <?php echo form_open_multipart('backend/gram/upload/'.$ontotita->id, $attributes); ?>
+                         <?php $attributes = array('id' => 'suserfilenewform'); ?>
+                         <?php echo form_open_multipart('backend/suser/upload/'.$ontotita->id, $attributes); ?>
 
   <div class="form-group">
   <?php if(isset($_POST['description'])) $set1 = $_POST['description']; else $set1='';?>
