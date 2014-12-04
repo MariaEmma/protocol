@@ -33,7 +33,7 @@ class Suserfiles extends MY_Controller {
         $data['mtitle'] = 'Εισερχόμενα αρχεία';
         $ds = new File($fileid);
         $bs = $ds->getFileReceiver(); 
-        echo $bs->id;
+        echo $bs->id.' '.$fileid;
         die();
         if($id != $data['user']->id){
             $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αρχειοθέτησης αυτού του αρχείου!</div>');            
@@ -158,6 +158,7 @@ class Suserfiles extends MY_Controller {
                     }
                     else {
                 $bs->user_id=null;
+                $bs->save();
       
                 $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>');
                 redirect('backend/suser/output/'.$data['user']->id);
