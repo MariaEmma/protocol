@@ -15,7 +15,7 @@
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row">
-            <th class="sorting_asc" scope="col">Α/Α</th>
+            <th class="sorting_asc" scope="col">Προς</th>
             <th class="sorting" scope="col">Περιγραφή</th>
             <th class="sorting" scope="col">Ημερομηνία αποστολής</th>
             <th class="sorting" scope="col">Ενέργειες</th>
@@ -25,13 +25,17 @@
       <tbody>
           <?php foreach ($eggrafes as $b) :?>
             <tr>
-                <td><?php echo $b->id;?></td>
-                <td><?php echo $b->description;?></td>
+                 <td><?php $us=$b->getFileReceiver();echo $us->firstname;?></td>
+                 <td><?php echo $b->description;?></td>
                  <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
-                 <td class="center"><a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
-                                    <i class="fa fa-download"></i>                                            
-                            </a>          
-                    </td>
+                 <td class="center">
+                     <a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
+                         <i class="fa fa-download"></i>                                            
+                     </a>  
+                     <a class="btn btn-danger"  href="/backend/suser/delete/<?php echo $b->id;?>" onclick="return confirm('Eίστε σίγουροι για την διαγραφή;')" title="Διαγραφή">
+                         <i class="fa fa-trash-o"></i>
+                     </a>    
+                 </td>
             </tr>
             <?php endforeach; ?>
       </tbody>

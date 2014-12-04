@@ -37,6 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+$route['backend/suser/store/(:num)'] = "suserfiles/store/$1";
 $route['backend/suser/delete/(:num)'] = "suserfiles/delete/$1";
 $route['backend/suser/output/(:num)'] = "suserfiles/output/$1";
 $route['backend/suser/upload/(:num)'] = "suserfiles/upload/$1";
