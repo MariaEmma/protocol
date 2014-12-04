@@ -35,6 +35,7 @@ function getMaxId(){
     function getFileReceiver(){
         return $this->user->get();
     }
+    
 
 }
 

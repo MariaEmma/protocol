@@ -20,7 +20,8 @@
             <th class="sorting" scope="col">Περιγραφή</th>
             <th class="sorting" scope="col">Ημερομηνία</th>
             <th class="sorting" scope="col">Kατάσταση</th>
-            <th class="sorting" scope="col">Ενέργειες</th>
+            <th class="sorting" scope="col">Επιλέξτε κατηγορία αρχειοθέτησης</th>
+            <th class="sorting" scope="col">Αρχείο</th>
                                          		
         </tr>
       </thead>   
@@ -38,13 +39,42 @@
                     <span class="label label-info">Χρεωμένο από Πρόεδρο</span>
                  <?php }; ?>
                  </td>
-                 <td class="center"><a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
-                                    <i class="fa fa-download"></i>                                            
-                            </a>
-                            <a class="btn btn-danger"  href="/backend/suser/delete/<?php echo $b->id;?>" onclick="return confirm('Eίστε σίγουροι για την διαγραφή;')" title="Διαγραφή">
-                                    <i class="fa fa-trash-o"></i>
-                            </a>           
-                    </td>
+                 <td>
+                        <?php $attributes = array('class'=>'form-horizontal', 'id' => 'requestnewform'); ?>
+                        <?php echo form_open('backend/suser/store/'.$b->id, $attributes); ?>
+                        <div class="control-group"> 
+                            <?php echo form_error('categoryid');?>
+
+                            <div class="controls">
+                            <?php $js = 'id = "categoryid" name="categoryid" tabindex = "1" data-rel="chosen" ';
+                            $options=array('0'=>'- Αρχειοθέτηση -');
+                            $allcategories = new Category();
+                            $allcategories->getCategories();
+                            foreach($allcategories as $onecat):
+                              $options[$onecat->id] = $onecat->title;  
+                            endforeach;
+                            echo form_dropdown('categoryid', $options, 0, $js);?> 
+                            </div>       
+                        </div>
+                     <div class="form-actions">
+                        <?php echo form_button(array(
+                                        'name' => 'button',
+                                        'id' => 'button',
+                                        'value' => 'true',
+                                        'tabindex' => '11',
+                                        'type' => 'submit',
+                                        'content' => '<i class="fa fa-archive"></i>',
+                                        'class' => 'btn btn-primary'
+                        )); ?>
+                        </div>    
+                        <?php echo form_fieldset_close(); ?>
+                        <?php echo form_close();?>
+                  </td>
+                  <td class="center">
+                     <a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
+                        <i class="fa fa-download"></i>                                            
+                     </a>
+                  </td>
             </tr>
             <?php endforeach; ?>
       </tbody>
