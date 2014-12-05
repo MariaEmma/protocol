@@ -115,6 +115,13 @@ class User extends DataMapper {
     function getUserProtocol(){
         return $this->where('usertype_id',3)->get();
     }
+    function getUserUnstoredFiles(){
+        return $this->file->where('category_id',NULL)->get();
+    }
+    function getUserStoredFiles(){
+        return $this->file->where('category_id',!NULL)->get();
+    }
+    
 }
 
 /* End of file user.php */

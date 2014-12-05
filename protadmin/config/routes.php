@@ -37,11 +37,12 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-$route['backend/suser/store/(:num)'] = "suserfiles/store/$1";
+$route['backend/suser/store/(:any)/(:num)'] = "suserfiles/store/$1/$2";
 $route['backend/suser/delete/(:num)'] = "suserfiles/delete/$1";
 $route['backend/suser/output/(:num)'] = "suserfiles/output/$1";
 $route['backend/suser/upload/(:num)'] = "suserfiles/upload/$1";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
+$route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
 $route['backend/president/edit/(:num)'] = "presfiles/edit/$1";
 $route['backend/president/output'] = "presfiles/output";
