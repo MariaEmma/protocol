@@ -44,6 +44,13 @@ $route['backend/suser/upload/(:num)'] = "suserfiles/upload/$1";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
 $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
+$route['backend/vicepresident/store/(:any)/(:num)'] = "vicepresfiles/store/$1/$2";
+$route['backend/vicepresident/delete/(:num)'] = "vicepresfiles/delete/$1";
+$route['backend/vicepresident/output/(:num)'] = "vicepresfiles/output/$1";
+$route['backend/vicepresident/upload/(:num)'] = "vicepresfiles/upload/$1";
+$route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
+$route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
+
 $route['backend/president/edit/(:num)'] = "presfiles/edit/$1";
 $route['backend/president/output'] = "presfiles/output";
 $route['backend/president/input'] = "presfiles/input";
