@@ -1,7 +1,7 @@
 <?php
 
 class File extends DataMapper {
-    var $has_one = array('category'); 
+    
     var $has_many = array(
         'user' => array(			
             'class' => 'user',			
@@ -35,7 +35,9 @@ function getMaxId(){
     function getFileReceiver(){
         return $this->user->get();
     }
-    
+    function getUserFile($userid){
+        return $this->user_file->where('user_id',$userid)->get();
+    }
 
 }
 

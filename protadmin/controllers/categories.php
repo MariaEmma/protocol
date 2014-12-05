@@ -15,7 +15,7 @@ class Categories extends MY_Controller {
                 $data['mtitle'] = 'Ενέργειες Διαχειριστή - Κατηγορίες αρχειoθέτησης';
                 $bs = new Category();
                 $data['categories'] = $bs->getCategories();
-$data['ontotita'] = $data['user'];
+                $data['ontotita'] = $data['user'];
                 $this->load->view('users/sidebar',$data);
                 $this->load->view('categories/index',$data);
         }

@@ -2,7 +2,7 @@
 
 class Category extends DataMapper {
    
-    var $has_many = array('file');
+    var $has_many = array('user_file');
     var $table = 'categories';
     var $validation = array(
         
