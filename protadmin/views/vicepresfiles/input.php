@@ -43,7 +43,7 @@
                         <?php $userid = $b->user->get()->id; ?>
                         
                         <?php $attributes = array('class'=>'form-horizontal', 'id' => 'requestnewform'); ?>
-                        <?php echo form_open('backend/suser/store/'.$userid.'/'.$b->id, $attributes); ?>
+                        <?php echo form_open('backend/vicepresident/store/'.$userid.'/'.$b->id, $attributes); ?>
                         <div class="control-group"> 
                             <?php echo form_error('categoryid');?>
 
