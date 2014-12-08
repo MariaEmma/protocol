@@ -32,7 +32,7 @@
                      <a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
                          <i class="fa fa-download"></i>                                            
                      </a>  
-                     <a class="btn btn-danger"  href="/backend/suser/delete/<?php echo $b->id;?>" onclick="return confirm('Eίστε σίγουροι για την διαγραφή;')" title="Διαγραφή">
+                     <a class="btn btn-danger"  href="/backend/vicepresident/delete/<?php echo $b->id;?>" onclick="return confirm('Eίστε σίγουροι για την διαγραφή;')" title="Διαγραφή">
                          <i class="fa fa-trash-o"></i>
                      </a>    
                  </td>

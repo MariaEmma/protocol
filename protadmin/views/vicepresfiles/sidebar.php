@@ -13,23 +13,23 @@
                                 <?php echo img($imagebcd);?>
             </li>
             <li>
-                <a  href="/backend/suser/input/<?php echo $ontotita->id;?>"><i class="fa fa-folder fa-2x"></i>Εισερχόμενα Αρχεία</a>
+                <a  href="/backend/vicepresident/input/<?php echo $ontotita->id;?>"><i class="fa fa-folder fa-2x"></i>Εισερχόμενα Αρχεία</a>
             </li>
             <li>
-                <a  href="/backend/suser/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
+                <a  href="/backend/vicepresident/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
             </li>
             <li>
-                <a  href="/backend/suser/upload/<?php echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Αποστολή Αρχείου</a>
+                <a  href="/backend/vicepresident/upload/<?php echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Αποστολή Αρχείου</a>
             </li>
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
             </li>
             <li>
-                <a  href="/backend/suser/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
+                <a  href="/backend/vicepresident/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
                     <span class="fa arrow"></span>
                 </a>
                 <ul class="nav nav-second-level collapse in" style="height: auto;">
-                    <li><a href="/backend/suser/archive/<?php echo $ontotita->id;?>">Αρχεία Προέδρου</a></li>
+                    <li><a href="/backend/vicepresident/archive/<?php echo $ontotita->id;?>">Αρχεία Προέδρου</a></li>
                     <li><a href="#">Αρχεία Διαγωνισμών</a></li>
                     
                 </ul>

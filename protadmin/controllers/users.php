@@ -146,8 +146,12 @@ class Users extends MY_Controller {
                     $lview = 'presfiles/sidebar';
                 }
                 else if($data['user']->usertype_id == 5){
-                    $uri ='/backend/suser/index/'.$data['user']->id;
+                    $uri ='/backend/suser/input/'.$data['user']->id;
                     $lview = 'suserfiles/sidebar';
+                }
+                else if($data['user']->usertype_id == 7){
+                    $uri ='/backend/vicepresident/input/'.$data['user']->id;
+                    $lview = 'vicepresfiles/sidebar';
                 }
                 else{}
                 

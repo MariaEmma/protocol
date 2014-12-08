@@ -57,7 +57,7 @@ class Admin extends CI_Controller {
                          else if($u->usertype_id == 6)
                                 redirect('backend/school/index/'.$u->id);
                         else if($u->usertype_id == 7)
-                                redirect('backend/vicepresident/input');
+                                redirect('backend/vicepresident/input/'.$u->id);
                         else redirect('backend/');
                         }
                     else

@@ -13,24 +13,24 @@ class Vicepresfiles extends MY_Controller {
         public function input($id)
 	{ 
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
             $data['mtitle'] = 'Εισερχόμενα αρχεία';
             $bs = new User($id);
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-                redirect('backend/suser/input/'.$data['user']->id);
+                redirect('backend/vicepresident/input/'.$data['user']->id);
             }
             $data['ontotita'] = $bs ;
             $data['eggrafes'] = $bs->getUserUnstoredFiles();
 
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/input',$data); 
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/input',$data); 
 	}
-        // store the incoming files in one from the available categories
+        // store the incoming files in one of the available categories
         public function store($id,$fileid)
 	{ 
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
             $data['mtitle'] = 'Εισερχόμενα αρχεία';
            // get user, file and the connection id
             $ds = new File($fileid);
@@ -40,7 +40,7 @@ class Vicepresfiles extends MY_Controller {
             //redirect if the file is not user's 
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αρχειοθέτησης αυτού του αρχείου!</div>');            
-                redirect('backend/suser/input/'.$data['user']->id);
+                redirect('backend/vicepresident/input/'.$data['user']->id);
              }
         
             $data['ontotita'] = $bs ;
@@ -49,31 +49,32 @@ class Vicepresfiles extends MY_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 
             if ($this->form_validation->run() == FALSE){         
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/input',$data); 
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/input',$data); 
              }else{
             $temp = new User_file($ksid);
             $temp->category_id = $this->input->post('categoryid');
             if($temp->save()){ 
 
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αρχειθέτηση!</div>');
-                            redirect('backend/suser/input/'.$data['user']->id);
+                            redirect('backend/vicepresident/input/'.$data['user']->id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αρχειθέτησης!</div>');
-                                  redirect('/backend/suser/input/'.$data['user']->id);
+                                  redirect('/backend/vicepresident/input/'.$data['user']->id);
                                   }
              }
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/input',$data);
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/input',$data);
 	}
+        
         //upload and send file in the user-protocol
       public function upload($id) {    
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
-                redirect('backend/suser/input/'.$data['user']->id);
+                redirect('backend/vicepresident/input/'.$data['user']->id);
             }
             $data['mtitle'] = 'Αποστολή αρχείου';
             $bs = new User($id); 
@@ -84,8 +85,8 @@ class Vicepresfiles extends MY_Controller {
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
 
              if($this->form_validation->run() == FALSE){         
-                 $this->load->view('suserfiles/sidebar',$data);
-                 $this->load->view('suserfiles/upload',$data); 
+                 $this->load->view('vicepresfiles/sidebar',$data);
+                 $this->load->view('vicepresfiles/upload',$data); 
 
              }else{
                     $maxid = new File();
@@ -108,7 +109,7 @@ class Vicepresfiles extends MY_Controller {
                     if ( ! $this->upload->do_upload())
                     {   
                         $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
-                        redirect('/backend/suser/upload/'.$id);
+                        redirect('/backend/vicepresident/upload/'.$id);
                     }
                     else
                     {
@@ -121,11 +122,11 @@ class Vicepresfiles extends MY_Controller {
 
                             $tempu->save($protcol);
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
-                            redirect('/backend/suser/input/'.$id);
+                            redirect('/backend/vicepresident/input/'.$id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
-                                  redirect('/backend/suser/upload/'.$id);
+                                  redirect('/backend/vicepresident/upload/'.$id);
                                   }
              }
         
@@ -135,25 +136,25 @@ class Vicepresfiles extends MY_Controller {
         public function output($id)
 	{ 
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
             $data['mtitle'] = 'Απεσταλμένα αρχεία';
             $bs = new User($id); 
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-                redirect('backend/suser/output/'.$data['user']->id);
+                redirect('backend/vicepresident/output/'.$data['user']->id);
             }
             $data['ontotita'] = $bs ;
             $files = new File();
             $data['eggrafes'] = $files->getSentFilesOfUser($bs->id);
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/output');
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/output');
 	}
     
         //delete the sent files only when they are not protocoled
         public function delete($id)
 	{ 
          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");
-         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");             
+         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");             
             if((int)$id > 0){
                 $bs = new File($id);
                 if($bs->user_id == $data['user']->id){
@@ -171,7 +172,7 @@ class Vicepresfiles extends MY_Controller {
                 $bs->save();
       
                 $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>');
-                redirect('backend/suser/output/'.$data['user']->id);
+                redirect('backend/vicepresident/output/'.$data['user']->id);
                 }
             
               }
@@ -180,23 +181,23 @@ class Vicepresfiles extends MY_Controller {
             } else {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
             }      
-         redirect('backend/suser/output/'.$data['user']->id);
+         redirect('backend/vicepresident/output/'.$data['user']->id);
 	} 
         //view stored files
         public function archive($id){
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
             $data['mtitle'] = 'Αρχειοθετημένα αρχεία';
             $bs = new User($id);
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-                redirect('backend/suser/input/'.$data['user']->id);
+                redirect('backend/vicepresident/input/'.$data['user']->id);
             }
             $data['ontotita'] = $bs ;
             $data['eggrafes'] = $bs->getUserStoredFiles();
 
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/archive',$data); 
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/archive',$data); 
             
         }
         
