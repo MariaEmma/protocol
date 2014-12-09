@@ -46,7 +46,7 @@ class Protfiles extends MY_Controller {
         
             $data['ontotita'] = $bs ;
             //get the category from the form and store it
-            $this->form_validation->set_rules('usersid', 'Κατηγορία αρχειοθέτησης', 'checkIfUserIdIsZero');
+            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'checkIfUserIdIsZero');
             $this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 
             if ($this->form_validation->run() == FALSE){         
@@ -59,23 +59,26 @@ class Protfiles extends MY_Controller {
             $temp->protocol_date = date("Y-m-d H:i:s");
             $temp->sender_name = $bs->firstname.' '.$bs->lastname;
             $urids = $this->input->post('usersid');
-                
-            if($temp->save()){ 
+            
+            if (!empty($urids)){
+                $temp->save(); 
                 foreach ($urids as $oneid):
                     $receiver = new User($oneid);
-                    $tempu->save($receiver);
+                    $temp->save($receiver);
                 endforeach;
+            }
+            if ($temp->save()){
                   
-                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αρχειθέτηση!</div>');
-                            redirect('backend/suser/input/'.$data['user']->id);
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                            redirect('backend/protocol/input/'.$data['user']->id);
                                   }
                     else {
-                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αρχειθέτησης!</div>');
-                                  redirect('/backend/suser/input/'.$data['user']->id);
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
+                                  redirect('/backend/protocol/input/'.$data['user']->id);
                                   }
              }
-            $this->load->view('suserfiles/sidebar',$data);
-            $this->load->view('suserfiles/input',$data);
+            $this->load->view('protfiles/sidebar',$data);
+            $this->load->view('protfiles/input',$data);
         
        	}
         

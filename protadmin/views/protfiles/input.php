@@ -45,12 +45,12 @@
                         <?php echo form_open('backend/protocol/send/'.$userid.'/'.$b->id, $attributes); ?>
                         
                      
-                            <?php echo form_error('usersid');?>
+                            
                            <div class="control-group">
-                   
+                   <?php echo form_error('usersid');?>
                     <div class="controls">
                           <?php $js ='id = "usersid" multiple name="usersid" tabindex = "1" data-rel="chosen" style="width:200px" ';
-                            $options=array('');
+                            $options=array();
                             $allusers = new User();
                             $allusers->getUsers();
                             foreach($allusers as $oneuser):

@@ -40,10 +40,9 @@
                  <?php }; ?>
                  </td>
                  <td>
-                        <?php $userid = $b->user->get()->id; ?>
-                        
+                       
                         <?php $attributes = array('class'=>'form-horizontal', 'id' => 'requestnewform'); ?>
-                        <?php echo form_open('backend/suser/store/'.$userid.'/'.$b->id, $attributes); ?>
+                        <?php echo form_open('backend/suser/store/'.$ontotita->id.'/'.$b->id, $attributes); ?>
                         <div class="control-group"> 
                             <?php echo form_error('categoryid');?>
 
@@ -58,6 +57,7 @@
                             echo form_dropdown('categoryid', $options, 0, $js);?> 
                             </div>       
                         </div>
+                      <div style="padding-top:10px;"></div>
                      <div class="form-actions">
                         <?php echo form_button(array(
                                         'name' => 'button',

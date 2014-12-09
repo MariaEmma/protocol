@@ -38,6 +38,7 @@ class Vicepresfiles extends MY_Controller {
             $ks = new User_file();
             $ksid = $ks->getUserFile($id,$fileid);
             //redirect if the file is not user's 
+          
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αρχειοθέτησης αυτού του αρχείου!</div>');            
                 redirect('backend/vicepresident/input/'.$data['user']->id);

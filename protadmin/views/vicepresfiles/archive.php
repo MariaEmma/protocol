@@ -40,9 +40,9 @@
                     <?php }; ?>
                  </td>
                  <td>
-                     <?php $userid = $b->user->get()->id; 
+                     <?php 
                      $ks = new User_file();
-                     $ksid = $ks->getUserFile($userid,$b->id);
+                     $ksid = $ks->getUserFile($ontotita->id,$b->id);
                      $ksnew = new User_file($ksid);
                      $category = new Category($ksnew->category_id);
                      echo $category->title;
