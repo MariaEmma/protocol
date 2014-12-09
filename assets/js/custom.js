@@ -215,6 +215,9 @@
         mainApp.main_fun();
     });
     
+    //chosen - improves select
+	$('[data-rel="chosen"],[rel="chosen"]').chosen();
+
 
 }(jQuery));
 //enable select school only when usertype=2

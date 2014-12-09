@@ -3,6 +3,7 @@
     <script src="<?php echo $resources;?>js/jquery-1.10.2.js"></script>
       <!-- BOOTSTRAP SCRIPTS -->
     <script src="<?php echo $resources;?>js/bootstrap.min.js"></script>
+    <script src="<?php echo $resources;?>js/chosen.jquery.js"></script>
     <!-- METISMENU SCRIPTS -->
     <script src="<?php echo $resources;?>js/jquery.metisMenu.js"></script>
          <!-- MORRIS CHART SCRIPTS -->

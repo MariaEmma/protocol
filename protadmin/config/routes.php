@@ -57,8 +57,9 @@ $route['backend/president/input'] = "presfiles/input";
 
 $route['backend/protocol/delete/(:num)'] = "protfiles/delete/$1";
 $route['backend/protocol/edit/(:num)'] = "protfiles/edit/$1";
-$route['backend/protocol/output'] = "protfiles/output";
-$route['backend/protocol/input'] = "protfiles/input";
+$route['backend/protocol/output/(:num)'] = "protfiles/output/$1";
+$route['backend/protocol/input/(:num)'] = "protfiles/input/$1";
+$route['backend/protocol/send/(:any)/(:num)'] = "protfiles/send/$1/$2";
 
 $route['backend/gram/delete/(:num)'] = "gramfiles/delete/$1";
 $route['backend/gram/upload/(:num)'] = "gramfiles/upload/$1";
