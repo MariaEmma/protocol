@@ -49,7 +49,7 @@ class Admin extends CI_Controller {
                         else if($u->usertype_id == 2)
                                 redirect('backend/gram/myown/'.$u->id);
                         else if($u->usertype_id == 3)
-                                redirect('backend/protocol/input');
+                                redirect('backend/protocol/input/'.$u->id);
                         else if($u->usertype_id == 4)
                                 redirect('backend/president/input');
                         else if($u->usertype_id == 5)

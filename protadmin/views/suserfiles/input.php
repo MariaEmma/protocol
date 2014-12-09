@@ -63,7 +63,7 @@
                                         'name' => 'button',
                                         'id' => 'button',
                                         'value' => 'true',
-                                        'tabindex' => '11',
+                                        'tabindex' => '2',
                                         'type' => 'submit',
                                         'content' => '<i class="fa fa-archive"></i>',
                                         'class' => 'btn btn-primary'
