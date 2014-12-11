@@ -121,6 +121,9 @@ class User extends DataMapper {
     function getUserStoredFiles(){
         return $this->file->where('category_id',!NULL)->get();
     }
+    function getProtocolInputFiles(){
+        return $this->file->where('is_protocol',0)->get();
+    }
     
 }
 

@@ -4,6 +4,8 @@
       <!-- BOOTSTRAP SCRIPTS -->
     <script src="<?php echo $resources;?>js/bootstrap.min.js"></script>
     <script src="<?php echo $resources;?>js/chosen.jquery.js"></script>
+    <script src="<?php echo $resources;?>js/bootstrap-datepicker.js"></script>
+    <script src="<?php echo $resources;?>js/bootstrap-editable.js"></script>
     <!-- METISMENU SCRIPTS -->
     <script src="<?php echo $resources;?>js/jquery.metisMenu.js"></script>
          <!-- MORRIS CHART SCRIPTS -->
@@ -19,4 +21,14 @@
             });
     </script>
          <!-- CUSTOM SCRIPTS -->
+         <script>
+$('.inline-editable').editable({
+    selector: 'a.editable-click',
+    type: 'text',
+    url: "<?php echo site_url('protfiles/updateprotocol');?>",
+    title: 'Επεξεργασία τιμής',
+    mode:'inline',
+});
+</script>
     <script src="<?php echo $resources;?>js/custom.js"></script>
+    
