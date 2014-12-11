@@ -23,7 +23,7 @@ class Protfiles extends MY_Controller {
             redirect('backend/protocol/input/'.$data['user']->id);
         }
         $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getUserUnstoredFiles();
+        $data['eggrafes'] = $bs->getProtocolInputFiles();
 
         $this->load->view('protfiles/sidebar',$data);
         $this->load->view('protfiles/input',$data); 
@@ -45,29 +45,39 @@ class Protfiles extends MY_Controller {
              }
         
             $data['ontotita'] = $bs ;
+             
+                             
             //get the category from the form and store it
+            $this->form_validation->set_rules('protocol_no', 'Αριθμός πρωτοκόλλου', 'required|numeric|trim|checkIfUserIdIsZero');
+            $this->form_validation->set_rules('protocol_date', 'Ημερομηνία πρωτοκόλλου','required' );
             $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'checkIfUserIdIsZero');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 
             if ($this->form_validation->run() == FALSE){         
-            $this->load->view('protfiles/sidebar',$data);
-            $this->load->view('protfiles/input',$data); 
-             }else{
+//            $this->load->view('protfiles/sidebar',$data);
+//            $this->load->view('protfiles/input',$data);
+//           
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Βάλτε τιμή στα πεδία πρωτόκολλο και ημερομηνία και επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
+       
+           
+             }  else{
+            
             $temp = new File($fileid);
             $temp->user_id = $bs->id;
             $temp->is_protocol = 1;
-            $temp->protocol_date = date("Y-m-d H:i:s");
             $temp->sender_name = $bs->firstname.' '.$bs->lastname;
+            $temp->protocol_no = $this->input->post('protocol_no');;
+            if($this->input->post('protocol_date')=='') 
+                $tempu->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
+            else
+                $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
             $urids = $this->input->post('usersid');
-            
-            if (!empty($urids)){
-                $temp->save(); 
+
+            if ($temp->save()){
                 foreach ($urids as $oneid):
                     $receiver = new User($oneid);
                     $temp->save($receiver);
                 endforeach;
-            }
-            if ($temp->save()){
                   
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('backend/protocol/input/'.$data['user']->id);
@@ -77,12 +87,22 @@ class Protfiles extends MY_Controller {
                                   redirect('/backend/protocol/input/'.$data['user']->id);
                                   }
              }
-            $this->load->view('protfiles/sidebar',$data);
-            $this->load->view('protfiles/input',$data);
+            
+            redirect('backend/protocol/input/'.$data['user']->id);
+                             
         
        	}
         
-        
+//        public function updateprotocol(){
+//            $file = new File($this->input->post('pk'));
+//            if($this->input->post('name') == 'name'){
+//            $file->protocol_no = $this->input->post('value');
+//                $file->is_protocol=1;
+//                $file->save();
+//            
+//            }
+//            else {}
+//        }
      public function edit($id)
 	{ 
         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include_partials/incPaths.php");

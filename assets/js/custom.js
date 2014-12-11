@@ -216,7 +216,14 @@
     });
     
     //chosen - improves select
-	$('[data-rel="chosen"],[rel="chosen"]').chosen();
+    $('[data-rel="chosen"],[rel="chosen"]').chosen();
+    
+    //make editable the protocol number
+    
+    $('#username').editable();
+    
+    //datepicker
+    $('.datepicker').datepicker();
 
 
 }(jQuery));

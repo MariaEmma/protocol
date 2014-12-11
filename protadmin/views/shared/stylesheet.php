@@ -3,6 +3,8 @@
     <!-- FONTAWESOME STYLES-->
     <link href="<?php echo $resources;?>css/font-awesome.css" rel="stylesheet" />
     <link href="<?php echo $resources;?>css/chosen.css" rel="stylesheet" />
+    <link href="<?php echo $resources;?>css/datepicker.css" rel="stylesheet" />
+    <link href="<?php echo $resources;?>css/bootstrap-editable.css" rel="stylesheet"/>
          <!-- MORRIS CHART STYLES-->
    <!-- <link href="<?php //echo $resources;?>/js/morris/morris-0.4.3.min.css" rel="stylesheet" /> -->
      <!-- CUSTOM STYLES-->
