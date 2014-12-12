@@ -93,6 +93,23 @@ class Protfiles extends MY_Controller {
                              
         
        	}
+        //view the sent files
+        public function output($id)
+	{ 
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/protaccess.php");
+            $data['mtitle'] = 'Απεσταλμένα αρχεία';
+            $bs = new User($id); 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/suser/output/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs ;
+            $files = new File();
+            $data['eggrafes'] = $files->getSentFilesOfUser($bs->id);
+            $this->load->view('protfiles/sidebar',$data);
+            $this->load->view('protfiles/output');
+	}
         
 //        public function updateprotocol(){
 //            $file = new File($this->input->post('pk'));
