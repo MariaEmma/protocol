@@ -8,20 +8,20 @@ class Gramfiles extends MY_Controller {
                 parent::__construct();  
 	}
 
-    public function myown($id)
+    public function input($id)
 	{ 
         require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");
-        $data['mtitle'] = 'Ενέργειες Γραμματείας - Απεσταλμένα αρχεία';
+        $data['mtitle'] = 'Ενέργειες Γραμματείας - Εισερχόμενα αρχεία';
         $bs = new User($id);
         if($id != $data['user']->id){
             $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-            redirect('backend/gram/myown/'.$data['user']->id);
+            redirect('backend/gram/input/'.$data['user']->id);
         }
         $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getUserFiles();
+        $data['eggrafes'] = $bs->getUserUnstoredFiles();
         $this->load->view('gramfiles/sidebar',$data);
-        $this->load->view('gramfiles/grammyown',$data); 
+        $this->load->view('gramfiles/input',$data); 
 	}
         
      public function upload($id)
@@ -35,7 +35,7 @@ class Gramfiles extends MY_Controller {
         $data['mtitle'] = 'Ενέργειες Γραμματείας - Αποστολή αρχείου';
         $bs = new User($id); 
         $data['ontotita'] = $bs ;
- 
+        $school = new User($bs->school_id);
         $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
        
@@ -45,7 +45,7 @@ class Gramfiles extends MY_Controller {
 
          }else{
                $maxid = new File();
-               $ar =$maxid->getMaxId()+1;
+                $ar =$maxid->getMaxId()+1;
                 $tempu = new File();
                 $tempu->description = $this->input->post('description');      
                 $tempu->user_id = $id;
@@ -73,12 +73,12 @@ class Gramfiles extends MY_Controller {
                 //end upload
       
                 if($tempu->save()){ 
-                              
-                        $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
-                        redirect('/backend/gram/myown/'.$id);
+                        $tempu->save($school);
+                        $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                        redirect('/backend/gram/input/'.$id);
                               }
                 else {
-                              $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
+                              $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
                               redirect('/backend/gram/upload/'.$id);
                               }
          }
@@ -86,41 +86,47 @@ class Gramfiles extends MY_Controller {
        	}
         
         
-     public function certified($id)
-	{ 
-        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");
-        $data['mtitle'] = 'Ενέργειες Γραμματείας - Πρωτοκολλημένα αρχεία';
-        $bs = new User($id); 
-        if($id != $data['user']->id){
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-            redirect('backend/gram/certified/'.$data['user']->id);
-        }
-        $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getProtocolUserFiles();
-        $this->load->view('gramfiles/sidebar',$data);
-        $this->load->view('gramfiles/gramcertified');
-	}
+//     public function certified($id)
+//	{ 
+//        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+//        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");
+//        $data['mtitle'] = 'Ενέργειες Γραμματείας - Πρωτοκολλημένα αρχεία';
+//        $bs = new User($id); 
+//        if($id != $data['user']->id){
+//            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+//            redirect('backend/gram/certified/'.$data['user']->id);
+//        }
+//        $data['ontotita'] = $bs ;
+//        $data['eggrafes'] = $bs->getProtocolUserFiles();
+//        $this->load->view('gramfiles/sidebar',$data);
+//        $this->load->view('gramfiles/gramcertified');
+//	}
     
 
-     public function delete($id)
+     public function delete($userid,$id)
 	{ 
          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");
         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");             
             if((int)$id > 0){
                 $bs = new File($id);
+                $ds = new User($userid);
+            $usrfile = new User_file();
+            $usrfileid = $usrfile->getUserFile($userid,$id);
+//            if($bs->is_protocol == 1) {
+//                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αρχείο δεν μπορεί να σβήσει!</div>');
+//                redirect('backend/gram/input/'.$data['user']->id);
+//                }
+               
+            if($ds->id == $data['user']->id){
+//                if (isset($bs->upload_file))
+//                    {
+//                        $bpath = MY_FILEPATH;
+//                        unlink($bpath.$bs->upload_file);
+//                    }
+//            $bs->delete();
                 
-            if($bs->is_protocol == 1) {
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αρχείο δεν μπορεί να σβήσει!</div>');
-                redirect('backend/gram/myown/'.$data['user']->id);
-                }
-            if($bs->user_id == $data['user']->id){
-                if (isset($bs->upload_file))
-                    {
-                        $bpath = MY_FILEPATH;
-                        unlink($bpath.$bs->upload_file);
-                    }
-            $bs->delete();
+           $userassign = new User_file($usrfileid);
+           $userassign->delete();
             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>'); 
             }
             else
@@ -128,7 +134,7 @@ class Gramfiles extends MY_Controller {
             } else {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
             }      
-         redirect('backend/gram/myown/'.$data['user']->id);
+         redirect('backend/gram/input/'.$data['user']->id);
 	} 
 }       
 

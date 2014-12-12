@@ -19,10 +19,7 @@
                 </button>
                 <div class="navbar-brand" style="background-color: #A70303; font-size:14px;" >Εφαρμογή Πρωτόκολλου<br/>TEI ΘΕΣΣΑΛΙΑΣ</div> 
             </div>
-  <div style="color: white;
-padding: 15px 50px 5px 50px;
-float: right;
-font-size: 12px;"> Καλώς ήλθατε: <span style="font-weight:bold;"><?php echo $user->firstname.' '.$user->lastname; ?></span>, Τελευταία είσοδος :  <?php if ($ldate!=null) echo date("d/m/Y H:i:s", strtotime($ldate));?>&nbsp; <a href="/backend/logout" class="btn btn-danger square-btn-adjust">Αποσύνδεση</a> </div>
+  <div class="intro-text"> Καλώς ήλθατε: <span style="font-weight:bold;"><?php echo $user->firstname.' '.$user->lastname; ?></span>, Τελευταία είσοδος :  <?php if ($ldate!=null) echo date("d/m/Y H:i:s", strtotime($ldate));?>&nbsp; <a href="/backend/logout" class="btn btn-danger square-btn-adjust">Αποσύνδεση</a> </div>
         </nav>  
            <!-- /. NAV TOP  --> 
 

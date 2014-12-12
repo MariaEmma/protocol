@@ -61,10 +61,10 @@ $route['backend/protocol/output/(:num)'] = "protfiles/output/$1";
 $route['backend/protocol/input/(:num)'] = "protfiles/input/$1";
 $route['backend/protocol/send/(:any)/(:num)'] = "protfiles/send/$1/$2";
 
-$route['backend/gram/delete/(:num)'] = "gramfiles/delete/$1";
+$route['backend/gram/delete/(:any)/(:num)'] = "gramfiles/delete/$1/$2";
 $route['backend/gram/upload/(:num)'] = "gramfiles/upload/$1";
 $route['backend/gram/certified/(:num)'] = "gramfiles/certified/$1";
-$route['backend/gram/myown/(:num)'] = "gramfiles/myown/$1";
+$route['backend/gram/input/(:num)'] = "gramfiles/input/$1";
 
 $route['backend/user/activate/(:num)'] = "users/activate/$1";
 $route['backend/user/deactivate/(:num)'] = "users/deactivate/$1";

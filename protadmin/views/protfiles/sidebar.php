@@ -21,16 +21,7 @@
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
             </li>
-            <li>
-                <a  href="/backend/protocol/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
-                    <span class="fa arrow"></span>
-                </a>
-                <ul class="nav nav-second-level collapse in" style="height: auto;">
-                    <li><a href="/backend/protocol/archive/<?php echo $ontotita->id;?>">Αρχεία Προέδρου</a></li>
-                    <li><a href="#">Αρχεία Διαγωνισμών</a></li>
-                    
-                </ul>
-            </li>
+           
         </ul>
     </div>
 </nav> 		
