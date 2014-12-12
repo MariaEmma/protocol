@@ -45,7 +45,8 @@ class Protfiles extends MY_Controller {
              }
         
             $data['ontotita'] = $bs ;
-             
+            $usrfile = new User_file();
+            $usrfileid = $usrfile->getUserFile($id,$fileid);
                              
             //get the category from the form and store it
             $this->form_validation->set_rules('protocol_no', 'Αριθμός πρωτοκόλλου', 'required|numeric|trim|checkIfUserIdIsZero');
@@ -72,13 +73,13 @@ class Protfiles extends MY_Controller {
             else
                 $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
             $urids = $this->input->post('usersid');
-
+            $protocolassign = new User_file($usrfileid);
             if ($temp->save()){
                 foreach ($urids as $oneid):
                     $receiver = new User($oneid);
                     $temp->save($receiver);
                 endforeach;
-                  
+               $protocolassign->delete();
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('backend/protocol/input/'.$data['user']->id);
                                   }
