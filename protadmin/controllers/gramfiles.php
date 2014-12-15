@@ -85,23 +85,6 @@ class Gramfiles extends MY_Controller {
         
        	}
         
-        
-//     public function certified($id)
-//	{ 
-//        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-//        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/gramaccess.php");
-//        $data['mtitle'] = 'Ενέργειες Γραμματείας - Πρωτοκολλημένα αρχεία';
-//        $bs = new User($id); 
-//        if($id != $data['user']->id){
-//            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-//            redirect('backend/gram/certified/'.$data['user']->id);
-//        }
-//        $data['ontotita'] = $bs ;
-//        $data['eggrafes'] = $bs->getProtocolUserFiles();
-//        $this->load->view('gramfiles/sidebar',$data);
-//        $this->load->view('gramfiles/gramcertified');
-//	}
-    
 
      public function delete($userid,$id)
 	{ 

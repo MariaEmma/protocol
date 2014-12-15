@@ -118,6 +118,12 @@ class User extends DataMapper {
     function getUserUnstoredFiles(){
         return $this->file->where('category_id',NULL)->get();
     }
+    function getUserWithoutSchoolprotocolFiles(){
+        return $this->file->where('is_school',0)->get();
+    }
+    function getUserWithSchoolprotocolFiles(){
+        return $this->file->where('is_school',1)->get();
+    }
     function getUserStoredFiles(){
         return $this->file->where('category_id',!NULL)->get();
     }

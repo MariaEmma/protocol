@@ -63,8 +63,14 @@ $route['backend/protocol/send/(:any)/(:num)'] = "protfiles/send/$1/$2";
 
 $route['backend/gram/delete/(:any)/(:num)'] = "gramfiles/delete/$1/$2";
 $route['backend/gram/upload/(:num)'] = "gramfiles/upload/$1";
-$route['backend/gram/certified/(:num)'] = "gramfiles/certified/$1";
+//$route['backend/gram/certified/(:num)'] = "gramfiles/certified/$1";
 $route['backend/gram/input/(:num)'] = "gramfiles/input/$1";
+
+$route['backend/school/certified/(:num)'] = "schoolfiles/certified/$1";
+$route['backend/school/certify/(:any)/(:num)'] = "schoolfiles/certify/$1/$2";
+$route['backend/school/delete/(:any)/(:num)'] = "schoolfiles/delete/$1/$2";
+$route['backend/school/upload/(:num)'] = "schoolfiles/upload/$1";
+$route['backend/school/input/(:num)'] = "schoolfiles/input/$1";
 
 $route['backend/user/activate/(:num)'] = "users/activate/$1";
 $route['backend/user/deactivate/(:num)'] = "users/deactivate/$1";

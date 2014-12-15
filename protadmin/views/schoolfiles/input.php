@@ -15,27 +15,26 @@
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row">
-            
-            <th class="sorting" scope="col">Αποστολέας</th>
+            <th class="sorting_asc" scope="col">Από</th>
             <th class="sorting" scope="col">Περιγραφή</th>
-            <th class="sorting" scope="col">Ημερομηνία</th>
+            <th class="sorting" scope="col">Ημερομηνία αποστολής</th>
             <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>
-            <th class="sorting" scope="col">Αρχείο</th>
+            <th class="sorting" scope="col">Ενέργειες</th>
                                          		
         </tr>
       </thead>   
       <tbody>
           <?php foreach ($eggrafes as $b) :?>
             <tr>
-                 <td><?php echo $b->sender_name;?></td>
-                 <td><?php echo $b->description;?></td>
-                 <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
-              <td>
+                <td><?php echo $b->sender_name;?></td>
+                <td><?php echo $b->description;?></td>
+                <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
+                <td><?php if ($b->is_protocol!=null) echo $b->protocol_no.' '.$b->protocol_date;?></td>  
+                <td>
                    
-                    <?php $attributes = array('class'=>'form-horizontal', 'id' => 'protocolnewform'); ?>
-                    <?php echo form_open('backend/protocol/send/'.$ontotita->id.'/'.$b->id, $attributes); ?>
-                    
-                         <div class="span3">
+                    <?php $attributes = array('class'=>'form-horizontal', 'id' => 'schoolnewform'); ?>
+                    <?php echo form_open('backend/school/certify/'.$ontotita->id.'/'.$b->id, $attributes); ?>
+                        <div class="span3">
                             <div class="control-group"> 
                                <?php if(isset($_POST['protocol_no'])) $set1 = $_POST['protocol_no']; else $set1='';?>
                                <?php echo form_error('protocol_no');?>  
@@ -65,25 +64,7 @@
                                                            ));?> 
                                 </div>
                             </div>
-                         </div>
-                         
-                      
-                        <div class="control-group" style="padding-top:10px;">
-                            <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
-                            <?php echo form_error('usersid');?>
-                            <div class="controls">
-                                <?php $js ='id = "usersid" multiple name="usersid" tabindex = "3" data-rel="chosen" style="width:200px"';
-                                $options=array();
-                                $allusers = new User();
-                                $allusers->getUsers();
-                                foreach($allusers as $oneuser):
-                                  $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                                endforeach;
-                                 echo form_dropdown('usersid[]', $options, 0, $js);?>
-                            </div>
-                        </div>
-                        
-                   
+                        </div>  
                      <div class="form-actions" style="padding-top:10px;">
                         <?php echo form_button(array(
                                         'name' => 'button',
@@ -91,19 +72,19 @@
                                         'value' => 'true',
                                         'tabindex' => '4',
                                         'type' => 'send',
-                                        'content' => '<i class="fa fa-share"></i>',
+                                        'content' => '<i class="fa fa-arrow-right"></i>',
                                         'class' => 'btn btn-primary'
                         )); ?>
                      </div>    
                        
                         <?php echo form_close();?>
-                         </td>
-                
-                  <td class="center">
-                     <a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
-                        <i class="fa fa-download"></i>                                            
-                     </a>
-                  </td>
+                 </td>
+                 <td class="center">
+                     
+                        <a style="margin-top: 5px;" class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
+                           <i class="fa fa-download"></i>                                            
+                        </a>
+                 </td>
             </tr>
             <?php endforeach; ?>
       </tbody>
