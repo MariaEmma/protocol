@@ -196,7 +196,10 @@ color: #8d8888;
 .chat-img>img {
     margin-left:20px;
 }
-
+.strong {
+    font-weight: 700;
+    color: green;
+}
 /*==============================================
     MENU STYLES    
     =============================================*/
