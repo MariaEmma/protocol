@@ -29,8 +29,14 @@
                 <td><?php echo $b->sender_name;?></td>
                 <td><?php echo $b->description;?></td>
                 <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
-                <td><?php if ($b->is_protocol!=null) echo $b->protocol_no.' '.$b->protocol_date;?></td>  
-                <td>
+                <td><?php if ($b->is_protocol!=null) 
+                            echo '<span class="strong">Αριθμός:</span> '.$b->protocol_no.'<br/><span class="strong">Ημερομηνία:</span> '.$b->protocol_date;  
+                            else echo "Δεν έχει πρωτόκολλο"?>
+                     <?php if ($b->is_president == 1) {;?> 
+                        <span class="label label-info">Χρεωμένο από Πρόεδρο</span>
+                     <?php }; ?>
+                </td> 
+                 <td>
                    
                     <?php $attributes = array('class'=>'form-horizontal', 'id' => 'schoolnewform'); ?>
                     <?php echo form_open('backend/school/certify/'.$ontotita->id.'/'.$b->id, $attributes); ?>

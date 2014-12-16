@@ -11,7 +11,7 @@
                         <div class="table-responsive">
                             <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 
-                                 <?php if($eggrafes->exists()){ ?>
+                                 <?php if($eggrafes1->exists()){ ?>
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row">
@@ -26,7 +26,7 @@
         </tr>
       </thead>   
       <tbody>
-          <?php foreach ($eggrafes as $b) :?>
+          <?php foreach ($eggrafes1 as $b) :?>
             <tr>
                 <td><?php echo $b->sender_name;?></td>
                 <td><?php echo $b->description;?></td>

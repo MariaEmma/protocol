@@ -29,9 +29,11 @@
                 <td><?php echo $b->sender_name;?></td>
                 <td><?php echo $b->description;?></td>
                 <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
-                <td><?php if ($b->is_protocol!=null) echo '<span class="strong">Αριθμός:</span> '.$b->protocol_no.'<br/><span class="strong">Ημερομηνία:</span> '.$b->protocol_date;?></td>  
-                
-                 <td class="center" style="text-align: center;">
+                <td><?php if ($b->is_protocol!=null) 
+                            echo '<span class="strong">Αριθμός:</span> '.$b->protocol_no.'<br/><span class="strong">Ημερομηνία:</span> '.$b->protocol_date;  
+                            else echo "Δεν έχει πρωτόκολλο"?>
+                </td> 
+                <td class="center" style="text-align: center;">
                      
                         <a style="margin-top: 5px;" class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
                            <i class="fa fa-download"></i>                                            
