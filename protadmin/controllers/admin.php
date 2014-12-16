@@ -51,7 +51,7 @@ class Admin extends CI_Controller {
                         else if($u->usertype_id == 3)
                                 redirect('backend/protocol/input/'.$u->id);
                         else if($u->usertype_id == 4)
-                                redirect('backend/president/input');
+                                redirect('backend/president/input/'.$u->id);
                         else if($u->usertype_id == 5)
                                 redirect('backend/suser/input/'.$u->id);
                          else if($u->usertype_id == 6)

@@ -133,7 +133,7 @@ class Schoolfiles extends MY_Controller {
                 $temp->protocol_no = $this->input->post('protocol_no');
                 $temp->is_school = 1;
                 if($this->input->post('protocol_date')=='') 
-                    $tempu->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
+                    $temp->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
                 else
                     $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
 

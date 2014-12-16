@@ -67,9 +67,9 @@ class Protfiles extends MY_Controller {
             $temp->user_id = $bs->id;
             $temp->is_protocol = 1;
             $temp->sender_name = $bs->firstname.' '.$bs->lastname;
-            $temp->protocol_no = $this->input->post('protocol_no');;
+            $temp->protocol_no = $this->input->post('protocol_no');
             if($this->input->post('protocol_date')=='') 
-                $tempu->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
+                $temp->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
             else
                 $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
             $urids = $this->input->post('usersid');
@@ -121,17 +121,8 @@ class Protfiles extends MY_Controller {
 //            }
 //            else {}
 //        }
-     public function edit($id)
-	{ 
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include_partials/incPaths.php");
-        
-        
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include_partials/incHeader.php");
-       
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include_partials/incFooter.php"); 
-	}
-    
-    
+     
+ 
         /*
      public function delete($id)
 	{ 

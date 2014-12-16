@@ -51,9 +51,11 @@ $route['backend/vicepresident/upload/(:num)'] = "vicepresfiles/upload/$1";
 $route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
 $route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
 
-$route['backend/president/edit/(:num)'] = "presfiles/edit/$1";
-$route['backend/president/output'] = "presfiles/output";
-$route['backend/president/input'] = "presfiles/input";
+$route['backend/president/archive/(:num)'] = "presfiles/archive/$1";
+$route['backend/president/store/(:any)/(:num)'] = "presfiles/store/$1/$2";
+$route['backend/president/output/(:num)'] = "presfiles/output/$1";
+$route['backend/president/input/(:num)'] = "presfiles/input/$1";
+$route['backend/president/send/(:any)/(:num)'] = "presfiles/send/$1/$2";
 
 $route['backend/protocol/delete/(:num)'] = "protfiles/delete/$1";
 $route['backend/protocol/edit/(:num)'] = "protfiles/edit/$1";

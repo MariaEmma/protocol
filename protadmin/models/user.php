@@ -98,13 +98,13 @@ class User extends DataMapper {
         return $this->file->get();
     }
     function getUserFiles(){
-        return $this->file->where('is_protocol',0)->order_by("created_date")->get();
+        return $this->file->where('is_protocol',0)->order_by("created_date","asc")->get();
     }
     function getProtocolUserFiles(){
-         return $this->file->where('is_protocol',1)->order_by("created_date")->get();
+         return $this->file->where('is_protocol',1)->order_by("created_date","asc")->get();
     }
     function getUserSentFiles($userid){
-        return $this->file->where('user_id',$userid)->get();
+        return $this->file->where('user_id',$userid)->order_by("created_date","asc")->get();
     }
     function getUsers(){
         return $this->order_by("lastname")->order_by("firstname")->get();
@@ -116,7 +116,13 @@ class User extends DataMapper {
         return $this->where('usertype_id',3)->get();
     }
     function getUserUnstoredFiles(){
-        return $this->file->where('category_id',NULL)->get();
+        return $this->file->where('category_id',NULL)->order_by("created_date","asc")->get();
+    }
+    function getUserNopresUnstoredFiles(){
+        return $this->file->where('category_id',NULL)->where('is_president',0)->get();
+    }
+    function getUserPresUnstoredFiles(){
+        return $this->file->where('category_id',NULL)->where('is_president',1)->get();
     }
     function getUserWithoutSchoolprotocolFiles(){
         return $this->file->where('is_school',0)->get();
@@ -124,8 +130,11 @@ class User extends DataMapper {
     function getUserWithSchoolprotocolFiles(){
         return $this->file->where('is_school',1)->get();
     }
-    function getUserStoredFiles(){
-        return $this->file->where('category_id',!NULL)->get();
+    function getUserStoredFilesCat1(){
+        return $this->file->where('category_id',1)->get();
+    }
+    function getUserStoredFilesCat3(){
+        return $this->file->where('category_id',3)->get();
     }
     function getProtocolInputFiles(){
         return $this->file->where('is_protocol',0)->get();
