@@ -51,6 +51,8 @@ $route['backend/vicepresident/upload/(:num)'] = "vicepresfiles/upload/$1";
 $route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
 $route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
 
+$route['backend/president/upload/(:num)'] = "presfiles/upload/$1";
+$route['backend/president/delete/(:num)'] = "presfiles/delete/$1";
 $route['backend/president/archive/(:num)'] = "presfiles/archive/$1";
 $route['backend/president/store/(:any)/(:num)'] = "presfiles/store/$1/$2";
 $route['backend/president/output/(:num)'] = "presfiles/output/$1";

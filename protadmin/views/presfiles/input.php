@@ -67,8 +67,8 @@
                     <div class="control-group"> 
                         <?php echo form_error('categoryid');?>
 
-                        <div class="controls">
-                        <?php $js = 'id = "categoryid" name="categoryid" tabindex = "1" data-rel="chosen" ';
+                        <div class="controls top-space">
+                        <?php $js = 'id = "categoryid" name="categoryid" tabindex = "1" data-rel="chosen"';
                         $options=array('0'=>'- Αρχειοθέτηση -');
                         $allcategories = new Category();
                         $allcategories->getCategories();
@@ -77,9 +77,8 @@
                         endforeach;
                         echo form_dropdown('categoryid', $options, 0, $js);?> 
                         </div>       
-                    </div>
-                    <div style="padding-top:10px;"></div>
-                    <div class="form-actions">
+                    </div> 
+                    <div class="form-actions top-space">
                         <?php echo form_button(array(
                                     'name' => 'button',
                                     'id' => 'button',

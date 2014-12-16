@@ -11,7 +11,7 @@
                         <div class="table-responsive">
                             <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 
-                                 <?php if($eggrafes1->exists()){ ?>
+                                 <?php if($eggrafes->exists()){ ?>
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row"> 
