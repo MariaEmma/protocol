@@ -195,7 +195,9 @@ class Vicepresfiles extends MY_Controller {
                 redirect('backend/vicepresident/input/'.$data['user']->id);
             }
             $data['ontotita'] = $bs ;
-            $data['eggrafes1'] = $bs->getUserStoredFilesCat1();
+            $cat = new Category();
+            $data['categories']= $cat->getFilesOfCategories($id);
+            $data['eggrafes'] = $bs->getUserStoredFiles();
 
             $this->load->view('vicepresfiles/sidebar',$data);
             $this->load->view('vicepresfiles/archive',$data); 

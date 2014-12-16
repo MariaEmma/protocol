@@ -123,22 +123,22 @@ class Presfiles extends MY_Controller {
         //upload and send file in the user-protocol
       public function upload($id) {    
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
-                redirect('backend/vicepresident/input/'.$data['user']->id);
+                redirect('backend/president/input/'.$data['user']->id);
             }
             $data['mtitle'] = 'Αποστολή αρχείου';
             $bs = new User($id); 
             $data['ontotita'] = $bs ;
-            $protuser = new User();
-            $protcol = $protuser->getUserProtocol();
+           
+            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
             $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
 
              if($this->form_validation->run() == FALSE){         
-                 $this->load->view('vicepresfiles/sidebar',$data);
-                 $this->load->view('vicepresfiles/upload',$data); 
+                 $this->load->view('presfiles/sidebar',$data);
+                 $this->load->view('presfiles/upload',$data); 
 
              }else{
                     $maxid = new File();
@@ -148,8 +148,7 @@ class Presfiles extends MY_Controller {
                     $tempu->user_id = $id;
                     $tempu->created_date = date("Y-m-d H:i:s"); 
                     $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
-
-
+                    $urids = $this->input->post('usersid');
              //start upload
                     $config['upload_path'] = MY_FILEPATH;
                     $config['allowed_types'] = 'pdf';
@@ -161,7 +160,7 @@ class Presfiles extends MY_Controller {
                     if ( ! $this->upload->do_upload())
                     {   
                         $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
-                        redirect('/backend/vicepresident/upload/'.$id);
+                        redirect('/backend/president/upload/'.$id);
                     }
                     else
                     {
@@ -171,14 +170,16 @@ class Presfiles extends MY_Controller {
                     //end upload
 
                     if($tempu->save()){ 
-
-                            $tempu->save($protcol);
+                        foreach ($urids as $oneid):
+                            $receiver = new User($oneid);
+                            $tempu->save($receiver);
+                        endforeach;
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
-                            redirect('/backend/vicepresident/input/'.$id);
+                            redirect('/backend/president/input/'.$id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
-                                  redirect('/backend/vicepresident/upload/'.$id);
+                                  redirect('/backend/president/upload/'.$id);
                                   }
              }
         
@@ -206,11 +207,13 @@ class Presfiles extends MY_Controller {
         public function delete($id)
 	{ 
          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");
-         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");             
+         include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");             
             if((int)$id > 0){
                 $bs = new File($id);
+                $ks = new User_file();
+                $userfiles = $ks->getUserFileForAfile($id)->result_count();
                 if($bs->user_id == $data['user']->id){
-                    if($bs->is_protocol == 0) {
+                    if($bs->is_protocol == 0 && $userfiles == 0) {
                          if (isset($bs->upload_file))
                         {
                         $bpath = MY_FILEPATH;
@@ -224,7 +227,7 @@ class Presfiles extends MY_Controller {
                 $bs->save();
       
                 $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>');
-                redirect('backend/vicepresident/output/'.$data['user']->id);
+                redirect('backend/president/output/'.$data['user']->id);
                 }
             
               }
@@ -233,7 +236,7 @@ class Presfiles extends MY_Controller {
             } else {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
             }      
-         redirect('backend/vicepresident/output/'.$data['user']->id);
+         redirect('backend/president/output/'.$data['user']->id);
 	} 
         //view stored files
         public function archive($id){
@@ -246,7 +249,7 @@ class Presfiles extends MY_Controller {
                 redirect('backend/president/input/'.$data['user']->id);
             }
             $data['ontotita'] = $bs ;
-            $data['eggrafes1'] = $bs->getUserStoredFilesCat1();
+            $data['eggrafes'] = $bs->getUserStoredFiles();
 
             $this->load->view('presfiles/sidebar',$data);
             $this->load->view('presfiles/archive',$data); 

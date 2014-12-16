@@ -130,12 +130,10 @@ class User extends DataMapper {
     function getUserWithSchoolprotocolFiles(){
         return $this->file->where('is_school',1)->get();
     }
-    function getUserStoredFilesCat1(){
-        return $this->file->where('category_id',1)->get();
+    function getUserStoredFiles(){
+        return $this->file->where('category_id <>','Null')->get();
     }
-    function getUserStoredFilesCat3(){
-        return $this->file->where('category_id',3)->get();
-    }
+    
     function getProtocolInputFiles(){
         return $this->file->where('is_protocol',0)->get();
     }

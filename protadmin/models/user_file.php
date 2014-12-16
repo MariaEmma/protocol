@@ -16,6 +16,10 @@ class User_file extends DataMapper {
     {
         return $this->where('user_id',$userid)->where('file_id',$fileid)->get()->id;
     }
+    function getUserFileForAfile($fileid)
+    {
+        return $this->where('file_id',$fileid)->get();
+    }
     
 }
 

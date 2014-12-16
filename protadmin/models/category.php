@@ -26,8 +26,8 @@ class Category extends DataMapper {
     function getCategories(){
         return $this->order_by("title")->get();
     }
-    function getCategoriesOfFiles(){
-        return $this->file->get();
+    function getFilesOfCategories(){
+        return $this->user_file->get();
     }
 }
 
