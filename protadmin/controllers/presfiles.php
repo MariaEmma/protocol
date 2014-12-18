@@ -131,8 +131,8 @@ class Presfiles extends MY_Controller {
             $data['mtitle'] = 'Αποστολή αρχείου';
             $bs = new User($id); 
             $data['ontotita'] = $bs ;
-           
-            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
+            $protuser = new User();
+            $protcol = $protuser->getUserProtocol();
             $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
 
@@ -148,7 +148,7 @@ class Presfiles extends MY_Controller {
                     $tempu->user_id = $id;
                     $tempu->created_date = date("Y-m-d H:i:s"); 
                     $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
-                    $urids = $this->input->post('usersid');
+                    
              //start upload
                     $config['upload_path'] = MY_FILEPATH;
                     $config['allowed_types'] = 'pdf';
@@ -159,7 +159,7 @@ class Presfiles extends MY_Controller {
 
                     if ( ! $this->upload->do_upload())
                     {   
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
                         redirect('/backend/president/upload/'.$id);
                     }
                     else
@@ -170,15 +170,12 @@ class Presfiles extends MY_Controller {
                     //end upload
 
                     if($tempu->save()){ 
-                        foreach ($urids as $oneid):
-                            $receiver = new User($oneid);
-                            $tempu->save($receiver);
-                        endforeach;
-                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
+                          $tempu->save($protcol);
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('/backend/president/input/'.$id);
                                   }
                     else {
-                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
                                   redirect('/backend/president/upload/'.$id);
                                   }
              }

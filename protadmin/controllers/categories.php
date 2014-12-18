@@ -7,8 +7,24 @@ class Categories extends MY_Controller {
 	{		
                 parent::__construct();  
 	}
-
-  public function index()
+        public function findfilescategories(){
+          if($_POST['id'] && $_POST['user']){
+                $category = new Category($_POST['id']); 
+                $userin = new User($_POST['user']);
+                $eggrafes = $userin->getUserStoredFilesByCategory($_POST['id']);
+                 foreach ($eggrafes as $b) :
+                  echo   'tr>';
+               echo '<td>'.$b->sender_name.'</td>';
+                echo '<td>'.$b->description.'</td>';
+                
+          echo  '</tr>';
+                 
+                 endforeach;
+                
+            }   
+            else {redirect('/');}
+        }
+        public function index()
 	{
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");     
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/adminaccess.php"); 

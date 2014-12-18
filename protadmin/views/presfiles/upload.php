@@ -9,23 +9,7 @@
                     <div class="panel-body">
                          <?php $attributes = array('id' => 'presfilenewform'); ?>
                          <?php echo form_open_multipart('backend/president/upload/'.$ontotita->id, $attributes); ?>
-                    <div class="control-group" style="padding-top:10px;padding-bottom:10px;">
-                            <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
-                            <?php echo form_error('usersid');?>
-                            <?php echo form_label('Επιλογή παραληπτών', 'usersid', array(
-                                 'for' => 'usersid',
-                                  ));  ?>
-                            <div class="controls">
-                                <?php $js ='id = "usersid" multiple name="usersid" tabindex = "3" data-rel="chosen" style="width:300px"';
-                                $options=array();
-                                $allusers = new User();
-                                $allusers->getUsers();
-                                foreach($allusers as $oneuser):
-                                  $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                                endforeach;
-                                 echo form_dropdown('usersid[]', $options, 0, $js);?>
-                            </div>
-                    </div>
+                   
                     <div class="form-group">
                         <?php if(isset($_POST['description'])) $set1 = $_POST['description']; else $set1='';?>
                         <?php echo form_error('description');?> 
