@@ -29,6 +29,7 @@ class Category extends DataMapper {
     function getFilesOfCategories(){
         return $this->user_file->get();
     }
+    
 }
 
 /* End of file user.php */

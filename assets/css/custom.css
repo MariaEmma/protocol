@@ -111,8 +111,23 @@ color: #fff;
 background-color: #B94A00;
 color: #fff;
 }
-
-
+.bycategory{
+    padding: 15px;
+}
+.bycategory #category_choice{
+    padding: 7px;
+    background: #79F372;
+    border: none;
+    color: rgba(54, 54, 54, 1);
+    border-radius: 5px;
+}
+.bycategory #category_choice option{
+    background: none repeat scroll 0% 0% #FFF;
+    border: none;
+}
+.bycategory btn {
+    background-color: #fff;
+}
  .icon-box-right {
 display: block;
 float: right;
@@ -326,6 +341,9 @@ font-weight: 700;
 background: #C90000;
 color:#fff;
 
+}
+#archiveTable th a {
+    color: rgba(6, 6, 6, 1);
 }
 
 .navbar-default {
