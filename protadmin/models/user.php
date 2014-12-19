@@ -112,6 +112,9 @@ class User extends DataMapper {
     function getSchoolUsers(){
         return $this->where('usertype_id',6)->order_by("firstname")->get();
     }
+    function getUserPresident(){
+        return $this->where('usertype_id',4)->get();
+    }
     function getUserProtocol(){
         return $this->where('usertype_id',3)->get();
     }

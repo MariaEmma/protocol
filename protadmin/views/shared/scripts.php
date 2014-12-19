@@ -26,7 +26,7 @@
                 $('#dataTables-archive').dataTable();
             });
     </script>
-    <script>
+<!--    <script>
     $('select').change(function(){
 var categorychoice  = $(this).val();
     $("tr").each(function () {
@@ -38,7 +38,7 @@ var categorychoice  = $(this).val();
     });
 });
     
-    </script>
+    </script>-->
 <script>
 $('.inline-editable').editable({
     selector: 'a.editable-click',
