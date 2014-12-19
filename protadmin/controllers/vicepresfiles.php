@@ -20,6 +20,8 @@ class Vicepresfiles extends MY_Controller {
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
                 redirect('backend/vicepresident/input/'.$data['user']->id);
             }
+            
+            $data['urtype'] = $bs->usertype ;
             $data['ontotita'] = $bs ;
             $data['eggrafes'] = $bs->getUserUnstoredFiles();
 

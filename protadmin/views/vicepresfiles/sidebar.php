@@ -28,6 +28,15 @@
                 <a  href="/backend/vicepresident/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
                 </a>
             </li>
+            <?php   $ur = new User();
+                    $presi = $ur->getUserPresident();
+                    $urtype = $ontotita->usertype->get();
+                    if ($urtype->is_incharge == 1) {?>
+            <li>
+                <a  href="/backend/president/input/<?php echo $presi->id;?>"><i class="fa fa-archive fa-2x"></i>Πρόσβαση ως Πρόεδρος
+                </a>
+            </li>
+                    <?php } ?>
         </ul>
     </div>
 </nav> 		
