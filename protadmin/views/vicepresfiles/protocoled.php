@@ -32,7 +32,7 @@
                      <?php if ($b->is_protocol != 1) {echo '<span class="label label-danger">Αναμονή για πρωτόκολλο</span><br/>'?>
                                  <?php } else { ?>
                                     <?php $attributes = array('class'=>'form-horizontal', 'id' => 'suserupform'); ?>
-                                    <?php echo form_open_multipart('backend/suser/upload/'.$ontotita->id.'/'.$b->id, $attributes); ?>
+                                    <?php echo form_open_multipart('backend/vicepresident/upload/'.$ontotita->id.'/'.$b->id, $attributes); ?>
 
                                      <div class="control-group">        
                                         <?php echo form_label('Επιλογή αρχείου', 'userfile', array(

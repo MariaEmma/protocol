@@ -16,11 +16,16 @@
                 <a  href="/backend/vicepresident/input/<?php echo $ontotita->id;?>"><i class="fa fa-folder fa-2x"></i>Εισερχόμενα Αρχεία</a>
             </li>
             <li>
-                <a  href="/backend/vicepresident/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
+                <a  href="/backend/vicepresident/request/<?php echo $ontotita->id;?>"><i class="fa fa-bookmark-o fa-2x"></i>Νέο αίτημα για πρωτόκολλο</a>
             </li>
+
             <li>
-                <a  href="/backend/vicepresident/upload/<?php echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Αποστολή Αρχείου</a>
+                <a  href="/backend/vicepresident/protocoled/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Πρωτοκολλημένα Αιτήματα</a>
             </li>
+<!--            <li>
+                <a  href="/backend/vicepresident/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
+            </li>-->
+            
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
             </li>
@@ -33,7 +38,7 @@
                     $urtype = $ontotita->usertype->get();
                     if ($urtype->is_incharge == 1) {?>
             <li>
-                <a  href="/backend/president/input/<?php echo $presi->id;?>"><i class="fa fa-archive fa-2x"></i>Πρόσβαση ως Πρόεδρος
+                <a  href="/backend/president/input/<?php echo $presi->id;?>"><i class="fa fa-sign-out fa-2x"></i>Πρόσβαση ως Πρόεδρος
                 </a>
             </li>
                     <?php } ?>

@@ -15,11 +15,15 @@
             <li>
                 <a  href="/backend/president/input/<?php echo $ontotita->id;?>"><i class="fa fa-folder fa-2x"></i>Εισερχόμενα Αρχεία</a>
             </li>
-            <li>
+<!--            <li>
                 <a  href="/backend/president/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
-            </li>
+            </li>-->
             <li>
-                <a  href="/backend/president/upload/<?php echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Αποστολή Αρχείου</a>
+                <a  href="/backend/president/request/<?php echo $ontotita->id;?>"><i class="fa fa-bookmark-o fa-2x"></i>Νέο αίτημα για πρωτόκολλο</a>
+            </li>
+
+            <li>
+                <a  href="/backend/president/protocoled/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Πρωτοκολλημένα Αιτήματα</a>
             </li>
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
