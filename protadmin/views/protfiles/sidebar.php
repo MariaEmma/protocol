@@ -16,7 +16,10 @@
                 <a  href="/backend/protocol/input/<?php echo $ontotita->id;?>"><i class="fa fa-folder fa-2x"></i>Εισερχόμενα Αρχεία</a>
             </li>
             <li>
-                <a  href="/backend/protocol/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
+                <a  href="/backend/protocol/requested/<?php echo $ontotita->id;?>"><i class="fa fa-level-down fa-2x"></i>Εισερχόμενα Αιτήματα</a>
+            </li>
+            <li>
+                <a  href="/backend/protocol/certified/<?php echo $ontotita->id;?>"><i class="fa fa-check-square-o fa-2x"></i>Πρωτοκολλημένα Αρχεία</a>
             </li>
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>

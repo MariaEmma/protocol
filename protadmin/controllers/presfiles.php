@@ -42,8 +42,7 @@ class Presfiles extends MY_Controller {
              }
         
             $data['ontotita'] = $bs ;
-                                        
-            //get the category from the form and store it
+            
             $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 

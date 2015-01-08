@@ -19,9 +19,7 @@
             <th class="sorting" scope="col">Αποστολέας</th>
             <th class="sorting" scope="col">Περιγραφή</th>
             <th class="sorting" scope="col">Ημερομηνία</th>
-            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>
-            <th class="sorting" scope="col">Αρχείο</th>
-                                         		
+            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>                            		
         </tr>
       </thead>   
       <tbody>

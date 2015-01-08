@@ -37,10 +37,13 @@
 | in the URL cannot be matched to a valid route.
 |
 */
+
 $route['backend/suser/store/(:any)/(:num)'] = "suserfiles/store/$1/$2";
 $route['backend/suser/delete/(:num)'] = "suserfiles/delete/$1";
 $route['backend/suser/output/(:num)'] = "suserfiles/output/$1";
-$route['backend/suser/upload/(:num)'] = "suserfiles/upload/$1";
+$route['backend/suser/request/(:num)'] = "suserfiles/request/$1";
+$route['backend/suser/protocoled/(:num)'] = "suserfiles/protocoled/$1";
+$route['backend/suser/upload/(:any)/(:num)'] = "suserfiles/upload/$1/$2";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
 $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
@@ -61,6 +64,9 @@ $route['backend/president/send/(:any)/(:num)'] = "presfiles/send/$1/$2";
 
 $route['backend/protocol/delete/(:num)'] = "protfiles/delete/$1";
 $route['backend/protocol/edit/(:num)'] = "protfiles/edit/$1";
+$route['backend/protocol/requested/(:num)'] = "protfiles/requested/$1";
+$route['backend/protocol/certified/(:num)'] = "protfiles/certified/$1";
+$route['backend/protocol/certify/(:any)/(:num)'] = "protfiles/certify/$1/$2";
 $route['backend/protocol/output/(:num)'] = "protfiles/output/$1";
 $route['backend/protocol/input/(:num)'] = "protfiles/input/$1";
 $route['backend/protocol/send/(:any)/(:num)'] = "protfiles/send/$1/$2";

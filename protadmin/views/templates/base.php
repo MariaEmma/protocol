@@ -28,7 +28,7 @@
 
     <div style="background-color: #999999; font-family:arial; padding:5px; text-align:center;font-size:12px;">
 			<strong>Υπεύθυνος:</strong> <a style="color:#fff;" href="http://teilar.academia.edu/TakisHartonas" title="Χρυσάφης Χαρτώνας" target="_blank">Χρυσάφης Χαρτώνας</a>, Καθηγητής<br/>
-                        <strong>Ανάπτυξη:</strong> <a style="color:#fff;" href="http://gr.linkedin.com/in/emmanouilmaria" target="_blank" title="Μαρία Εμμανουήλ">Μαρία Εμμανουήλ</a>, <a style="color:#fff;" href="http://www.somweb.gr" title="Χρήστος Σωμαράς" target="_blank">Χρήστος Σωμαράς</a><br/>
+                        <strong>Ανάπτυξη:</strong> <a style="color:#fff;" href="http://mariaemmanouil.me/" target="_blank" title="Μαρία Εμμανουήλ">Μαρία Εμμανουήλ</a>, <a style="color:#fff;" href="http://www.somweb.gr" title="Χρήστος Σωμαράς" target="_blank">Χρήστος Σωμαράς</a><br/>
 			&copy; <?php echo date('Y') ?> <a style="color:#fff;" href="http://www.teilar.gr" target="_blank">ΤΕΙ Θεσσαλίας</a>
 </div>    
  

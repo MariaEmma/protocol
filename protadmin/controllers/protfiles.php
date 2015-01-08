@@ -29,6 +29,40 @@ class Protfiles extends MY_Controller {
         $this->load->view('protfiles/input',$data); 
         
     }
+    public function requested($id) { 
+        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/protaccess.php");
+        $data['mtitle'] = 'Εισερχόμενα αιτήματα';
+        $bs = new User($id);
+        if($id != $data['user']->id){
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+            redirect('backend/protocol/input/'.$data['user']->id);
+        }
+        $data['ontotita'] = $bs ;
+        $fs = new File();
+        $data['eggrafes'] = $fs->getRequestsForProtocol();
+
+        $this->load->view('protfiles/sidebar',$data);
+        $this->load->view('protfiles/requested',$data); 
+        
+    }
+    public function certified($id) { 
+        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/protaccess.php");
+        $data['mtitle'] = 'Πρωτοκολλημένα και προωθημένα αρχεία';
+        $bs = new User($id);
+        if($id != $data['user']->id){
+            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+            redirect('backend/protocol/input/'.$data['user']->id);
+        }
+        $data['ontotita'] = $bs ;
+        $fs = new File();
+        $data['eggrafes'] = $fs->getProtocoledFiles();
+
+        $this->load->view('protfiles/sidebar',$data);
+        $this->load->view('protfiles/certified',$data); 
+        
+    }
         
      public function send($id,$fileid)
 	{ 
@@ -47,38 +81,35 @@ class Protfiles extends MY_Controller {
             $data['ontotita'] = $bs ;
             $usrfile = new User_file();
             $usrfileid = $usrfile->getUserFile($id,$fileid);
-                             
+            $userpres = new User();
+            $userpresident = $userpres->getUserPresident();             
             //get the category from the form and store it
             $this->form_validation->set_rules('protocol_no', 'Αριθμός πρωτοκόλλου', 'required|numeric|trim|checkIfUserIdIsZero');
             $this->form_validation->set_rules('protocol_date', 'Ημερομηνία πρωτοκόλλου','required' );
-            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'checkIfUserIdIsZero');
+            //$this->form_validation->set_rules('usersid', 'Παραλήπτες', 'checkIfUserIdIsZero');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 
-            if ($this->form_validation->run() == FALSE){         
-//            $this->load->view('protfiles/sidebar',$data);
-//            $this->load->view('protfiles/input',$data);
-//           
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Βάλτε τιμή στα πεδία πρωτόκολλο και ημερομηνία και επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
-       
-           
-             }  else{
+            if ($this->form_validation->run() == FALSE){                 
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Βάλτε τιμή στα πεδία πρωτόκολλο και ημερομηνία και επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
+            }  else{
             
             $temp = new File($fileid);
-            $temp->user_id = $bs->id;
+           // $temp->user_id = $bs->id;
             $temp->is_protocol = 1;
-            $temp->sender_name = $bs->firstname.' '.$bs->lastname;
+           // $temp->sender_name = $bs->firstname.' '.$bs->lastname;
             $temp->protocol_no = $this->input->post('protocol_no');
             if($this->input->post('protocol_date')=='') 
                 $temp->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
             else
                 $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
-            $urids = $this->input->post('usersid');
+           // $urids = $this->input->post('usersid');
             $protocolassign = new User_file($usrfileid);
             if ($temp->save()){
-                foreach ($urids as $oneid):
-                    $receiver = new User($oneid);
-                    $temp->save($receiver);
-                endforeach;
+//                foreach ($urids as $oneid):
+//                    $receiver = new User($oneid);
+//                    $temp->save($receiver);
+//                endforeach;
+               $temp->save($userpresident);
                $protocolassign->delete();
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('backend/protocol/input/'.$data['user']->id);
@@ -90,6 +121,53 @@ class Protfiles extends MY_Controller {
              }
             
             redirect('backend/protocol/input/'.$data['user']->id);
+                             
+        
+       	}
+        //add protocol to requests
+        public function certify($id,$fileid)
+	{ 
+       require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/protaccess.php");
+            $data['mtitle'] = 'Εισερχόμενα αρχεία';
+           // get user, file 
+            $ds = new File($fileid);
+            $bs = new User($id);
+            //redirect if the file is not user's 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αρχειοθέτησης αυτού του αρχείου!</div>');            
+                redirect('backend/protocol/requested/'.$data['user']->id);
+             }
+        
+            $data['ontotita'] = $bs ;
+            
+            $this->form_validation->set_rules('protocol_no', 'Αριθμός πρωτοκόλλου', 'required|numeric|trim|checkIfUserIdIsZero');
+            $this->form_validation->set_rules('protocol_date', 'Ημερομηνία πρωτοκόλλου','required' );
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
+
+            if ($this->form_validation->run() == FALSE){                 
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Βάλτε τιμή στα πεδία πρωτόκολλο και ημερομηνία και επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
+            }  else{
+            
+            $temp = new File($fileid);
+            $temp->is_protocol = 1;
+            $temp->protocol_no = $this->input->post('protocol_no');
+            if($this->input->post('protocol_date')=='') 
+                $temp->protocol_date= date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
+            else
+                $temp->protocol_date = date("Y-m-d H:i:s", strtotime($this->input->post('protocol_date')));
+            $protocolassign = new User_file($usrfileid);
+            if ($temp->save()){
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής πρωτοκόλληση!</div>');
+                            redirect('backend/protocol/requested/'.$data['user']->id);
+                                  }
+                    else {
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
+                                  redirect('/backend/protocol/requested/'.$data['user']->id);
+                                  }
+             }
+            
+            redirect('backend/protocol/requested/'.$data['user']->id);
                              
         
        	}

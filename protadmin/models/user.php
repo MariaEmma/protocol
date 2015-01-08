@@ -103,6 +103,7 @@ class User extends DataMapper {
     function getProtocolUserFiles(){
          return $this->file->where('is_protocol',1)->order_by("created_date","asc")->get();
     }
+        
     function getUserSentFiles($userid){
         return $this->file->where('user_id',$userid)->order_by("created_date","asc")->get();
     }

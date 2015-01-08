@@ -5,7 +5,7 @@
                 <?php echo $this->session->flashdata('msg'); ?>
                 <div class="panel panel-default">
                     
-                    <div class="panel-heading">Εισερχόμενα Αρχεία
+                    <div class="panel-heading">Εισερχόμενα Αιτήματα
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -19,9 +19,7 @@
             <th class="sorting" scope="col">Αποστολέας</th>
             <th class="sorting" scope="col">Περιγραφή</th>
             <th class="sorting" scope="col">Ημερομηνία</th>
-            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>
-            <th class="sorting" scope="col">Αρχείο</th>
-                                         		
+            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>                            		
         </tr>
       </thead>   
       <tbody>
@@ -33,7 +31,7 @@
               <td>
                    
                     <?php $attributes = array('class'=>'form-horizontal', 'id' => 'protocolnewform'); ?>
-                    <?php echo form_open('backend/protocol/send/'.$ontotita->id.'/'.$b->id, $attributes); ?>
+                    <?php echo form_open('backend/protocol/certify/'.$ontotita->id.'/'.$b->id, $attributes); ?>
                     
                          <div class="span3">
                             <div class="control-group"> 
@@ -98,12 +96,6 @@
                        
                         <?php echo form_close();?>
                          </td>
-                
-                  <td class="center">
-                     <a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
-                        <i class="fa fa-download"></i>                                            
-                     </a>
-                  </td>
             </tr>
             <?php endforeach; ?>
       </tbody>

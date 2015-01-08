@@ -129,7 +129,7 @@ class Schoolfiles extends MY_Controller {
             }  
              else {
                 $temp = new File($fileid);
-                $temp->is_protocol = 1;
+                
                 $temp->protocol_no = $this->input->post('protocol_no');
                 $temp->is_school = 1;
                 if($this->input->post('protocol_date')=='') 

@@ -19,7 +19,7 @@ class File extends DataMapper {
         ),
         'upload_file' => array(
             'label' => 'Αρχείο', 
-            'rules'=> array('required'),
+         
         ),        
     );
        
@@ -38,6 +38,18 @@ function getMaxId(){
     function getUserFile($userid){
         return $this->user_file->where('user_id',$userid)->get();
     }
+    //protocoled requests without uploaded file
+    function getRequestsForProtocol(){
+         return $this->where('is_protocol',0)->where('upload_file',NULL)->order_by("created_date","asc")->get();
+    }
+    //protocoled requests without uploaded file
+    function getProtocoledRequests($userid){
+         return $this->where('user_id',$userid)->where('is_protocol',1)->where('upload_file',NULL)->order_by("created_date","asc")->get();
+    }
+    function getProtocoledFiles(){
+         return $this->where('is_protocol',1)->order_by("protocol_date","asc")->get();
+    }
+    
 
 }
 
