@@ -50,11 +50,15 @@ $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 $route['backend/vicepresident/store/(:any)/(:num)'] = "vicepresfiles/store/$1/$2";
 $route['backend/vicepresident/delete/(:num)'] = "vicepresfiles/delete/$1";
 $route['backend/vicepresident/output/(:num)'] = "vicepresfiles/output/$1";
-$route['backend/vicepresident/upload/(:num)'] = "vicepresfiles/upload/$1";
+$route['backend/vicepresident/request/(:num)'] = "vicepresfiles/request/$1";
+$route['backend/vicepresident/protocoled/(:num)'] = "vicepresfiles/protocoled/$1";
+$route['backend/vicepresident/upload/(:any)/(:num)'] = "vicepresfiles/upload/$1/$2";
 $route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
 $route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
 
-$route['backend/president/upload/(:num)'] = "presfiles/upload/$1";
+$route['backend/president/request/(:num)'] = "presfiles/request/$1";
+$route['backend/president/protocoled/(:num)'] = "presfiles/protocoled/$1";
+$route['backend/president/upload/(:any)/(:num)'] = "presfiles/upload/$1/$2";
 $route['backend/president/delete/(:num)'] = "presfiles/delete/$1";
 $route['backend/president/archive/(:num)'] = "presfiles/archive/$1";
 $route['backend/president/store/(:any)/(:num)'] = "presfiles/store/$1/$2";

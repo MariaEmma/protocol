@@ -123,11 +123,11 @@ class Suserfiles extends MY_Controller {
                             $receiver = new User($oneid);
                             $tempu->save($receiver);
                         endforeach;
-                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('/backend/suser/protocoled/'.$id);
                                   }
                     else {
-                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
                                   redirect('/backend/suser/protocoled/'.$id);
                                   }
              }
@@ -248,7 +248,7 @@ class Suserfiles extends MY_Controller {
                     if($tempu->save()){ 
 
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
-                            redirect('/backend/suser/input/'.$id);
+                            redirect('/backend/suser/protocoled/'.$id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');

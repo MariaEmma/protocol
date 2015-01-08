@@ -72,24 +72,103 @@ class Vicepresfiles extends MY_Controller {
 	}
         
         //upload and send file in the user-protocol
-      public function upload($id) {    
+      public function upload($id,$fileid) {    
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
             include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
+            // get user, file 
+            $ds = new File($fileid);
+            $bs = new User($id);
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
-                redirect('backend/vicepresident/input/'.$data['user']->id);
+                redirect('backend/vicepresident/protocoled/'.$data['user']->id);
             }
             $data['mtitle'] = 'Αποστολή αρχείου';
-            $bs = new User($id); 
             $data['ontotita'] = $bs ;
-            $protuser = new User();
-            $protcol = $protuser->getUserProtocol();
-            $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
+            
+            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
 
              if($this->form_validation->run() == FALSE){         
                  $this->load->view('vicepresfiles/sidebar',$data);
-                 $this->load->view('vicepresfiles/upload',$data); 
+                 $this->load->view('vicepresfiles/protocoled',$data); 
+
+             }else{
+                    //rename uploaded file with increaseing number
+                    $maxid = new File();
+                    $ar =$maxid->getMaxId()+1;
+                    //select file
+                    $tempu = new File($fileid);
+                    $urids = $this->input->post('usersid');
+
+
+             //start upload
+                    $config['upload_path'] = MY_FILEPATH;
+                    $config['allowed_types'] = 'pdf';
+                    $config['max_size']	= '';
+                    $config['encrypt_name']= FALSE;
+                    $config['file_name'] = $ar.'.pdf';
+                    $this->load->library('upload', $config);                
+
+                    if ( ! $this->upload->do_upload())
+                    {   
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
+                        redirect('/backend/vicepresident/prtocoled/'.$id);
+                    }
+                    else
+                    {
+                            $tempu->upload_file = $this->upload->file_name;
+                    }
+
+                    //end upload
+
+                    if($tempu->save()){ 
+                        foreach ($urids as $oneid):
+                            $receiver = new User($oneid);
+                            $tempu->save($receiver);
+                        endforeach;
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                            redirect('/backend/vicepresident/protocoled/'.$id);
+                                  }
+                    else {
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
+                                  redirect('/backend/vicepresident/protocoled/'.$id);
+                                  }
+             }
+        
+       	}
+          //view the protocoled files
+        public function protocoled($id)
+	{ 
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
+            $data['mtitle'] = 'Πρωτοκολλημένα αιτήματα';
+            $bs = new User($id); 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/vicepresident/protocoled/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs;
+            $fs = new File();
+            $data['eggrafes'] = $fs->getProtocoledRequests($bs->id);
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/protocoled');
+	}
+        public function request ($id) {
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");     
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php"); 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
+                redirect('backend/vicepresident/input/'.$data['user']->id);
+            }
+            $data['mtitle'] = 'Αίτημα για πρωτόκολλο';
+            $bs = new User($id); 
+            $data['ontotita'] = $bs ;
+            $this->form_validation->set_rules('description', 'Περιγραφή','trim' );
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
+
+             if($this->form_validation->run() == FALSE){         
+                 $this->load->view('vicepresfiles/sidebar',$data);
+                 $this->load->view('vicepresfiles/request',$data); 
 
              }else{
                     $maxid = new File();
@@ -100,40 +179,17 @@ class Vicepresfiles extends MY_Controller {
                     $tempu->created_date = date("Y-m-d H:i:s"); 
                     $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
 
-
-             //start upload
-                    $config['upload_path'] = MY_FILEPATH;
-                    $config['allowed_types'] = 'pdf';
-                    $config['max_size']	= '';
-                    $config['encrypt_name']= FALSE;
-                    $config['file_name']	= $ar.'.pdf';
-                    $this->load->library('upload', $config);                
-
-                    if ( ! $this->upload->do_upload())
-                    {   
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
-                        redirect('/backend/vicepresident/upload/'.$id);
-                    }
-                    else
-                    {
-                            $tempu->upload_file = $this->upload->file_name;
-                    }
-
-                    //end upload
-
                     if($tempu->save()){ 
 
-                            $tempu->save($protcol);
-                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
-                            redirect('/backend/vicepresident/input/'.$id);
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                            redirect('/backend/vicepresident/protocoled/'.$id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
-                                  redirect('/backend/vicepresident/upload/'.$id);
+                                  redirect('/backend/vicepresident/request/'.$id);
                                   }
              }
-        
-       	}
+    }
         
         //view the sent files
         public function output($id)

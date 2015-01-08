@@ -119,47 +119,48 @@ class Presfiles extends MY_Controller {
             $this->load->view('presfiles/input',$data);
 	}
         
-        //upload and send file in the user-protocol
-      public function upload($id) {    
+         //upload and send file in the user-protocol
+      public function upload($id,$fileid) {    
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
             include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
+            // get user, file 
+            $ds = new File($fileid);
+            $bs = new User($id);
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
-                redirect('backend/president/input/'.$data['user']->id);
+                redirect('backend/president/protocoled/'.$data['user']->id);
             }
             $data['mtitle'] = 'Αποστολή αρχείου';
-            $bs = new User($id); 
             $data['ontotita'] = $bs ;
-            $protuser = new User();
-            $protcol = $protuser->getUserProtocol();
-            $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
+            
+            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
 
              if($this->form_validation->run() == FALSE){         
                  $this->load->view('presfiles/sidebar',$data);
-                 $this->load->view('presfiles/upload',$data); 
+                 $this->load->view('presfiles/protocoled',$data); 
 
              }else{
+                    //rename uploaded file with increaseing number
                     $maxid = new File();
                     $ar =$maxid->getMaxId()+1;
-                    $tempu = new File();
-                    $tempu->description = $this->input->post('description');      
-                    $tempu->user_id = $id;
-                    $tempu->created_date = date("Y-m-d H:i:s"); 
-                    $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
-                    
+                    //select file
+                    $tempu = new File($fileid);
+                    $urids = $this->input->post('usersid');
+
+
              //start upload
                     $config['upload_path'] = MY_FILEPATH;
                     $config['allowed_types'] = 'pdf';
                     $config['max_size']	= '';
                     $config['encrypt_name']= FALSE;
-                    $config['file_name']	= $ar.'.pdf';
+                    $config['file_name'] = $ar.'.pdf';
                     $this->load->library('upload', $config);                
 
                     if ( ! $this->upload->do_upload())
                     {   
-                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
-                        redirect('/backend/president/upload/'.$id);
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης! <strong>Eπιλέξτε κάποιο αρχείο ή το αρχείο που επιλέγετε να είναι με κατάληξη .pdf!</strong></div>');
+                        redirect('/backend/president/prtocoled/'.$id);
                     }
                     else
                     {
@@ -169,17 +170,74 @@ class Presfiles extends MY_Controller {
                     //end upload
 
                     if($tempu->save()){ 
-                          $tempu->save($protcol);
+                        foreach ($urids as $oneid):
+                            $receiver = new User($oneid);
+                            $tempu->save($receiver);
+                        endforeach;
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
-                            redirect('/backend/president/input/'.$id);
+                            redirect('/backend/president/protocoled/'.$id);
                                   }
                     else {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
-                                  redirect('/backend/president/upload/'.$id);
+                                  redirect('/backend/president/protocoled/'.$id);
                                   }
              }
         
        	}
+          //view the protocoled files
+        public function protocoled($id)
+	{ 
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
+            $data['mtitle'] = 'Πρωτοκολλημένα αιτήματα';
+            $bs = new User($id); 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/president/protocoled/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs;
+            $fs = new File();
+            $data['eggrafes'] = $fs->getProtocoledRequests($bs->id);
+            $this->load->view('presfiles/sidebar',$data);
+            $this->load->view('presfiles/protocoled');
+	}
+        public function request ($id) {
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php");     
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php"); 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα ανεβάσματος αρχείων για αυτό το χρήστη!</div>');            
+                redirect('backend/president/input/'.$data['user']->id);
+            }
+            $data['mtitle'] = 'Αίτημα για πρωτόκολλο';
+            $bs = new User($id); 
+            $data['ontotita'] = $bs ;
+            $this->form_validation->set_rules('description', 'Περιγραφή','trim' );
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
+
+             if($this->form_validation->run() == FALSE){         
+                 $this->load->view('presfiles/sidebar',$data);
+                 $this->load->view('presfiles/request',$data); 
+
+             }else{
+                    $maxid = new File();
+                    $ar =$maxid->getMaxId()+1;
+                    $tempu = new File();
+                    $tempu->description = $this->input->post('description');      
+                    $tempu->user_id = $id;
+                    $tempu->created_date = date("Y-m-d H:i:s"); 
+                    $tempu->sender_name = $bs->firstname.' '.$bs->lastname;
+
+                    if($tempu->save()){ 
+
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                            redirect('/backend/president/protocoled/'.$id);
+                                  }
+                    else {
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
+                                  redirect('/backend/president/request/'.$id);
+                                  }
+             }
+    }
         
         //view the sent files
         public function output($id)
