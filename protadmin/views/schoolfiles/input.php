@@ -19,7 +19,8 @@
             <th class="sorting" scope="col">Περιγραφή</th>
             <th class="sorting" scope="col">Ημερομηνία αποστολής</th>
             <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>
-            <th class="sorting" scope="col">Ενέργειες</th>
+            <th class="sorting" scope="col">Αρχείο</th>
+            <th class="sorting" scope="col">Επιλογή για προώθηση</th>
                                          		
         </tr>
       </thead>   
@@ -35,7 +36,13 @@
                      <?php if ($b->is_president == 1) {;?> 
                         <span class="label label-info">Χρεωμένο από Πρόεδρο</span>
                      <?php }; ?>
-                </td> 
+                </td>
+                <td class="center">
+                     
+                        <a style="margin-top: 5px;" class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
+                           <i class="fa fa-download"></i>                                            
+                        </a>
+                 </td>
                  <td>
                    
                     <?php $attributes = array('class'=>'form-horizontal', 'id' => 'schoolnewform'); ?>
@@ -85,12 +92,7 @@
                        
                         <?php echo form_close();?>
                  </td>
-                 <td class="center">
-                     
-                        <a style="margin-top: 5px;" class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
-                           <i class="fa fa-download"></i>                                            
-                        </a>
-                 </td>
+                 
             </tr>
             <?php endforeach; ?>
       </tbody>
