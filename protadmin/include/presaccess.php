@@ -8,7 +8,8 @@
          
          if($this->session->userdata('usertype'))
              $data['ltype'] = $this->session->userdata('usertype');
-             if($data['ltype'] != 4 ) redirect(base_url().'backend');
+             $urtype=$data['ltype'];
+             if($data['ltype'] != 4 || ($data['ltype'] != 7 && $urtype->is_incharge!=1)) redirect(base_url().'backend');
          }
          if($this->session->userdata('login_date'))
          $data['ldate'] = $this->session->userdata('login_date');
