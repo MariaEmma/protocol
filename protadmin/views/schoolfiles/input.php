@@ -12,6 +12,9 @@
                             <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
                                 
                                  <?php if($eggrafes->exists()){ ?>
+                                <?php $attributes = array('class'=>'form-horizontal', 'id' => 'schoolbulkform'); ?>
+                                <?php echo form_open_multipart('backend/school/bulkupload/'.$ontotita->id, $attributes); ?>
+                       
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row">
@@ -43,61 +46,86 @@
                            <i class="fa fa-download"></i>                                            
                         </a>
                  </td>
-                 <td>
+                 <td class="center">
                    
-                    <?php $attributes = array('class'=>'form-horizontal', 'id' => 'schoolnewform'); ?>
-                    <?php echo form_open('backend/school/certify/'.$ontotita->id.'/'.$b->id, $attributes); ?>
-                        <div class="span3">
-                            <div class="control-group"> 
-                               <?php if(isset($_POST['protocol_no'])) $set1 = $_POST['protocol_no']; else $set1='';?>
-                               <?php echo form_error('protocol_no');?>  
-                               <div class="controls">
-                               <?php echo form_input(array(
-                                                          'name'        => 'protocol_no',
-                                                          'id'          => 'protocol_no',
-                                                          'tabindex'    => '1',
-                                                          'placeholder' => 'Εισάγετε αριθμό',
-                                                          'class'       => 'input-large',
-                                                           'value'       => $set1,
-                                                          ));?> 
-                               </div>       
-                            </div>
-                             <div class="control-group" style="padding-top:10px;"> 
-                                <?php if(isset($_POST['protocol_date'])) $set1 = $_POST['protocol_date']; else $set1='';?>
-                                <?php echo form_error('protocol_date');?> 
-                               
-                                <div class="controls">
-                                <?php echo form_input(array(
-                                                           'name'        => 'protocol_date',
-                                                           'id'          => 'protocol_date',
-                                                           'tabindex'    => '2',
-                                                           'placeholder' => 'Εισάγετε ημερομηνία',
-                                                           'class'       => 'datepicker',
-                                                            'value'       => $set1,
-                                                           ));?> 
-                                </div>
-                            </div>
-                        </div>  
-                     <div class="form-actions" style="padding-top:10px;">
-                        <?php echo form_button(array(
-                                        'name' => 'button',
-                                        'id' => 'button',
-                                        'value' => 'true',
-                                        'tabindex' => '4',
-                                        'type' => 'send',
-                                        'content' => '<i class="fa fa-arrow-right"></i>',
-                                        'class' => 'btn btn-primary'
-                        )); ?>
-                     </div>    
-                       
-                        <?php echo form_close();?>
+                      <?php echo form_checkbox(array(
+                            'name'        => 'files[]',
+                            'id'          => $b->id,
+                            'tabindex'    => $b->id,
+                            'value'       => $b->id,
+                            'class'       => '',
+                        ));?>  
+                    
                  </td>
                  
             </tr>
             <?php endforeach; ?>
+           
       </tbody>
 </table>
-                                
+                          
+                
+                <div class="alert alert-warning">
+                      Επιλέξτε από τα παραπάνω αρχεία όσα θέλετε να επισυνάψετε με ένα νέο δικό σας για προώθηση και προχωρήστε με την παρακάτω φόρμα 
+                       <div class="control-group" style="padding-top:10px;padding-bottom:10px;">
+                            <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
+                            <?php echo form_error('usersid');?>
+                            <?php echo form_label('Επιλογή παραληπτών', 'usersid', array(
+                                 'for' => 'usersid',
+                                  ));  ?>
+                            <div class="controls">
+                                <?php $js ='id = "usersid" multiple name="usersid" tabindex = "3" data-rel="chosen" style="width:300px"';
+                                $options=array();
+                                $allusers = new User();
+                                $allusers->getUsers();
+                                foreach($allusers as $oneuser):
+                                  $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                                endforeach;
+                                 echo form_dropdown('usersid[]', $options, 0, $js);?>
+                            </div>
+                           
+                        </div> 
+                      <div class="control-group">
+                            <?php if(isset($_POST['description'])) $set1 = $_POST['description']; else $set1='';?>
+                            <?php echo form_error('description');?> 
+                            <?php echo form_label('Τίτλος-Περιγραφή', 'description', array(
+                                                    'for' => 'description',
+                                                   ));  ?>
+                                       <?php echo form_textarea(array(
+                                                 'name'        => 'description',
+                                                 'id'          => 'description',
+                                                 'tabindex'    => '2',
+                                                 'value'       => $set1,
+                                                 'placeholder' => 'Εισάγετε τίτλο - περιγραφή',
+                                                 'class'       => 'form-control',
+                                                 'rows'        => '2'
+                                               ));?>
+                        </div>
+                      <div class="control-group">        
+                            <?php echo form_label('Επιλογή αρχείου', 'userfile', array(
+                                 'for' => 'userfile',
+                                  ));  ?>
+                            <?php echo form_upload(array(
+                                        'name'        => 'userfile',
+                                        'id'          => 'userfile',
+                                        'tabindex'    => '2',
+                                        'class'       => '',
+                                        ));?>
+                        </div>
+                      <div style="padding-top: 10px"></div>
+                       <?php echo form_button(array(
+                                        'name' => 'button',
+                                        'id' => 'button',
+                                        'value' => 'true',
+                                        'tabindex'    => '3',
+                                        'type' => 'submit',
+                                        'content' => '<i class="fa fa-arrow-right"> Προώθηση</i>',
+                                        'class' => 'btn btn-danger'
+                            )); ?>                                            
+                            
+                            <?php echo form_close();?> 
+                    
+             </div>                         
                     <?php }   else { ?>
     <div class="alert alert-info alert-dismissable">
         <button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
