@@ -220,7 +220,7 @@
     
     //make editable the protocol number
     
-    $('#username').editable();
+  //  $('#username').editable();
     
     //datepicker
     $('.datepicker').datepicker();
