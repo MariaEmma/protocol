@@ -116,6 +116,12 @@ class User extends DataMapper {
     function getUserPresident(){
         return $this->where('usertype_id',4)->get();
     }
+    function getVicepresidentIncharge(){
+        return $this->where('usertype_id',7)->where('is_incharge',1)->get();
+    }
+    function getAllVicepresidents(){
+        return $this->where('usertype_id',7)->get();
+    }
     function getUserProtocol(){
         return $this->where('usertype_id',3)->get();
     }

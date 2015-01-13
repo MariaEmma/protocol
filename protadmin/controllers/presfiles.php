@@ -16,15 +16,108 @@ class Presfiles extends MY_Controller {
             include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
             $data['mtitle'] = 'Εισερχόμενα αρχεία';
             $bs = new User($id);
+            
+         //if($data['user']->is_incharge!=1) {  
             if($id != $data['user']->id){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
                 redirect('backend/president/input/'.$data['user']->id);
             }
+        //}
             $data['ontotita'] = $bs ;
             $data['eggrafes'] = $bs->getUserNopresUnstoredFiles();
 
             $this->load->view('presfiles/sidebar',$data);
             $this->load->view('presfiles/input',$data); 
+	}
+        //change to president
+        public function change($id)
+	{ 
+            $bs = new User($id);
+            $ur = new User();
+            $presi = $ur->getUserPresident();
+        
+            if($bs->is_incharge ==1){
+               $this->session->unset_userdata(array('username' => '', 'usertype' => ''));
+               $this->session->set_userdata(array('username' => $presi->username, 'usertype' => $presi->usertype_id,));            
+
+               redirect('backend/president/input/'.$presi->id);
+            }
+            else {
+                redirect(base_url().'backend');
+            }
+        
+	}
+         public function removeaccess($id,$viceid)
+	{ 
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
+            $data['mtitle'] = 'Παραχώρηση δικαιωμάτων';
+            $bs = new User($id);
+            $vs = new User($viceid);
+         //if($data['user']->is_incharge!=1) {  
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/president/input/'.$data['user']->id);
+            }
+        //}
+            $data['ontotita'] = $bs ;
+            $vs->is_incharge=0;
+            if ($vs->save()){
+                $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αφαίρεση δικαιωμάτων!</div>');
+                redirect('backend/president/grantaccess/'.$data['user']->id);
+            }
+            else {
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αφαίρεσης δικαιωμάτων!</div>');
+                redirect('/backend/president/grantaccess/'.$data['user']->id);
+            }
+        
+	}
+        //change to rights 
+        public function grantaccess($id)
+	{ 
+            require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
+            $data['mtitle'] = 'Παραχώρηση δικαιωμάτων';
+            $bs = new User($id);
+ 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/president/input/'.$data['user']->id);
+            }
+        
+            $data['ontotita'] = $bs ;
+            
+            $ur = new User();
+            $vipresi = $ur->getVicepresidentIncharge();
+//            if ($vipresi->exists()){
+//                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Έχετε ήδη αναθέσει δικαιώματα σε αντιπρόεδρο, αφαιρέστε τα και στη συνέχεια προχωρήστε με την ανάθεση !</div>');    
+//                redirect('backend/president/grantaccess/'.$data['user']->id);
+//            }
+            
+            $this->form_validation->set_rules('userid', 'Αντιπρόεδρος', 'required|checkIfUserIdIsZero');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
+
+            if ($this->form_validation->run() == FALSE){                    
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Επιλέξτε αντιπρόεδρο για την ανάθεση των δικαιωμάτων διαχείρισης!</div>');    
+            }  
+            else{
+                 $viceid = $_POST["userid"];
+                 $vice = new User($viceid);
+                 $vice->is_incharge = 1;
+                
+                 if ($vice->save()){
+                     $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής ανάθεση!</div>');
+                     redirect('backend/president/grantaccess/'.$data['user']->id);
+                                  }
+                    else {
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα ανάθεσης!</div>');
+                                  redirect('/backend/president/grantaccess/'.$data['user']->id);
+                                  }
+            }
+
+            $this->load->view('presfiles/sidebar',$data);
+            $this->load->view('presfiles/access',$data); 
+        
 	}
         
         public function send($id,$fileid)

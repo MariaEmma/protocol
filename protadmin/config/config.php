@@ -15,6 +15,8 @@
 |
 */
 $config['base_url']	= 'http://www.protocol.som/';
+//$config['base_url']    = 'http://protfiles.teilar.gr/';
+//$config['base_url']    = 'http://www.protocol.mac/';
 /*
 |--------------------------------------------------------------------------
 | Assets Folder

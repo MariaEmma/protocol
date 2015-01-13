@@ -35,18 +35,11 @@
             </li>
             <?php   $ur = new User();
                     $presi = $ur->getUserPresident();
-                    $urtype = $ontotita->usertype->get();
-                    if ($urtype->is_incharge == 1) {?>
+                    //$urtype = $ontotita->usertype->get();
+                    if ($ontotita->is_incharge == 1) {?>
             <li class>
-                <a href="#"><i class="fa fa-sign-out fa-2x"></i>Πρόσβαση ως Πρόεδρος
-                    <span class="fa arrow"></span>
+                <a href="/backend/president/change/<?php echo $ontotita->id;?>"><i class="fa fa-sign-out fa-2x"></i>Πρόσβαση ως Πρόεδρος
                 </a>
-                <ul class="nav nav-second-level collapse" aria-expanded="false">
-                    <li><a  href="/backend/president/input/<?php echo $presi->id;?>">Εισερχόμενα Προέδρου</a></li>
-                    <li><a  href="/backend/president/request/<?php echo $presi->id;?>">Νέο Αίτημα Προέδρου</a></li>
-                    <li><a  href="/backend/president/protocoled/<?php echo $presi->id;?>">Πρωτοκολλημένα Αιτήματα Προέδρου</a></li>
-                    <li><a  href="/backend/president/archive/<?php echo $presi->id;?>">Αρχειοθετημένα Προέδρου</a></li>
-                </ul>
             </li>
                     <?php }; ?>
         </ul>

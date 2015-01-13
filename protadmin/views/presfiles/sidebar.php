@@ -32,6 +32,19 @@
                 <a  href="/backend/president/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
                 </a>
             </li>
+            <li>
+                <a  href="/backend/president/grantaccess/<?php echo $ontotita->id;?>"><i class="fa fa-qrcode fa-2x"></i>Παραχώρηση Δικαιωμάτων
+                </a>
+            </li>
+            <?php   $ur = new User();
+                    $vicepresi = $ur->getVicepresidentIncharge();
+                    //$urtype = $ontotita->usertype->get();
+                    if ($vicepresi->exists()) {?>
+             <li>
+                <a  href="/backend/vicepresident/changetovicepres"><i class="fa fa-sign-out fa-2x"></i>Πρόσβαση ως Αντιπρόεδρος
+                </a>
+            </li>
+                    <?php } ?>
         </ul>
     </div>
 </nav> 		
