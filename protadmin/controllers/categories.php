@@ -112,16 +112,15 @@ class Categories extends MY_Controller {
             if((int)$id > 0){
                 $bs = new Category($id);
                 
-                $nofiles = $bs->getCategoriesOfFiles()->result_count();
-                if($nofiles == 0){
+                $nofiles = $bs->getFilesOfCategories()->result_count();
+                
+                if($nofiles > 0){
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Yπάρχουν αρχειοθετημένα αρχεία με αυτή την κατηγορία. Πρέπει να διαγράψετε πρώτα τα αρχεία για να μπορέσει να διαγραφεί η κατηγορία.</div>');
+                    redirect('/backend/category');
+                }
                     $bs->delete();
                     $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>');            
-                }
-                else 
-                    {
-                    $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Yπάρχουν αρχειοθετημένα αρχεία με αυτή την κατηγορία. Πρέπει να διαγράψετε πρώτα τα αρχεία για να μπορέσει να διαγραφεί η κατηγορία.</div>');
-                    
-                    } 
+               
                     
            } else {
                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
