@@ -28,6 +28,24 @@ class Vicepresfiles extends MY_Controller {
             $this->load->view('vicepresfiles/sidebar',$data);
             $this->load->view('vicepresfiles/input',$data); 
 	}
+        //change to vicepresident
+        public function changetovicepres()
+	{ 
+            $ur = new User();
+            $vicepresi = $ur->getVicepresidentIncharge();
+        
+            if($vicepresi->exists()){
+               $this->session->unset_userdata(array('username' => '', 'usertype' => ''));
+               $this->session->set_userdata(array('username' => $vicepresi->username, 'usertype' => $vicepresi->usertype_id,));            
+
+               redirect('backend/vicepresident/input/'.$vicepresi->id);
+            }
+            else {
+                redirect(base_url().'backend');
+            }
+        
+	}
+        
         // store the incoming files in one of the available categories
         public function store($id,$fileid)
 	{ 

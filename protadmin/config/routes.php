@@ -47,6 +47,7 @@ $route['backend/suser/upload/(:any)/(:num)'] = "suserfiles/upload/$1/$2";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
 $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
+$route['backend/vicepresident/changetovicepres'] = "vicepresfiles/changetovicepres";
 $route['backend/vicepresident/store/(:any)/(:num)'] = "vicepresfiles/store/$1/$2";
 $route['backend/vicepresident/delete/(:num)'] = "vicepresfiles/delete/$1";
 $route['backend/vicepresident/output/(:num)'] = "vicepresfiles/output/$1";
@@ -56,6 +57,9 @@ $route['backend/vicepresident/upload/(:any)/(:num)'] = "vicepresfiles/upload/$1/
 $route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
 $route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
 
+$route['backend/president/removeaccess/(:any)/(:num)'] = "presfiles/removeaccess/$1/$2";
+$route['backend/president/grantaccess/(:num)'] = "presfiles/grantaccess/$1";
+$route['backend/president/change/(:num)'] = "presfiles/change/$1";
 $route['backend/president/request/(:num)'] = "presfiles/request/$1";
 $route['backend/president/protocoled/(:num)'] = "presfiles/protocoled/$1";
 $route['backend/president/upload/(:any)/(:num)'] = "presfiles/upload/$1/$2";
@@ -98,6 +102,11 @@ $route['backend/category/delete/(:num)'] = "categories/delete/$1";
 $route['backend/category/update/(:num)'] = "categories/update/$1";
 $route['backend/category/new'] = "categories/addnew";
 $route['backend/category'] = "categories/index";
+
+$route['backend/group/delete/(:num)'] = "groups/delete/$1";
+$route['backend/group/update/(:num)'] = "groups/update/$1";
+$route['backend/group/new'] = "groups/addnew";
+$route['backend/group'] = "groups/index";
 
 $route['backend/logout'] = "admin/logout";
 $route['backend'] = "admin/login";

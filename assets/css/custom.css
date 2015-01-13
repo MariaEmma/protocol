@@ -367,6 +367,15 @@ background-color: #FFF;
     margin-right:10px;
 }
 /*==============================================
+    Custom ELEMENTS STYLES     
+    =============================================*/
+.padding-break {
+    padding-top: 15px;
+}
+.chosen-container-single .chosen-single div b {
+    background: url("../img/chosen-sprite.png") no-repeat scroll 0px 2px rgba(17, 17, 17, 0);
+}
+/*==============================================
     UI ELEMENTS STYLES     
     =============================================*/
 .btn-circle {
