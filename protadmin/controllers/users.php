@@ -122,8 +122,7 @@ class Users extends MY_Controller {
         }
         
         public function update($id)
-	{
-                //να γινει ελέγχος στον κωδικα οταν γραφτει
+	   {
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/allaccess.php"); 
             $data['mtitle'] = 'Ενέργειες Διαχειριστή - Επεξεργασία Χρήστη';
@@ -158,7 +157,7 @@ class Users extends MY_Controller {
                 if($id != $data['user']->id && $data['user']->usertype_id != 1){
                 $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αλλαγής των στοιχείων για αυτό το χρήστη!</div>');             
                 redirect($uri);
-            }
+                }
             $data['ontotita2'] = $bs = new User($id);
             $this->form_validation->set_rules('username', 'Όνομα χρήστη', 'required|min_length[3]|max_length[20]|edit_unique[users.username.'. $bs->id .']');
             if(isset($_POST['password']) && $bs->passwd != sha1($bs->salt . $_POST['password']))
@@ -166,6 +165,7 @@ class Users extends MY_Controller {
             $this->form_validation->set_rules('cnewpass', 'Eπιβεβαίωση νέου κωδικού', 'trim'); 
             $this->form_validation->set_rules('firstname', 'Όνομα', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Επώνυμο', 'trim|required');
+            $this->form_validation->set_rules('usertypeid', 'Τύπος Χρήστη', 'checkIfUserIdIsZero');
             $this->form_validation->set_rules('phone', 'Τηλέφωνο', 'trim|required');
             $this->form_validation->set_rules('email', 'Ηλεκτρονική διεύθυνση', 'trim|required|valid_email|emailexist||edit_unique[users.email.'. $bs->id .']');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
@@ -175,30 +175,36 @@ class Users extends MY_Controller {
                     $this->load->view('users/update',$data);
             }
             else{             
-                    if($bs->username != $this->input->post('username')){
-                           $bs->username = $this->input->post('username');
-                           if($id == $data['user']->id){
-                           $this->session->unset_userdata(array('username' => ''));
-                           $this->session->set_userdata(array('username' => $bs->username));
-                    }
-                           
-                    }
-                    if($this->input->post('password')!=null)                
-                           $bs->passwd = $this->input->post('password');
-                        
+                if($bs->username != $this->input->post('username')){
+                    $bs->username = $this->input->post('username');
+                    if($id == $data['user']->id) {
+                    $this->session->unset_userdata(array('username' => ''));
+                    $this->session->set_userdata(array('username' => $bs->username));
+                    }      
+                }
+                if($this->input->post('password')!=null)                
+                    $bs->passwd = $this->input->post('password');
+                    $bs->usertype_id = $this->input->post('usertypeid');
                     $bs->login_date = date("Y-m-d H:i:s"); 
                     $bs->firstname = $this->input->post('firstname');
                     $bs->lastname = $this->input->post('lastname');
                     $bs->phone = $this->input->post('phone');
                     $bs->email = $this->input->post('email');
+                    if ($bs->usertype_id == 2) {
+                        $bs->school_id = $this->input->post('school_id');
+                        if ($bs->school_id == null) {
+                        $this->session->set_flashdata('msg', '<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!Πρέπει να επιλέξετε τη Σχολή στην οποία ανήκει το τμήμα!</div>');
+                        redirect('/backend/user/update/'.$id);
+                        }
+                    }
                     if($bs->save()){
-                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
-                            redirect($uri);      
+                        $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
+                        redirect($uri);      
                     }
-                    else {
-                            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
-                            redirect('/backend/user/update/'.$id);
-                    }
+                else {
+                    $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!</div>');
+                    redirect('/backend/user/update/'.$id);
+                }
             }                       
             } else {
                     $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αντικείμενο δεν υπάρχει!</div>');  
