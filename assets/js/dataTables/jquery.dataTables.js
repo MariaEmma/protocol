@@ -10525,7 +10525,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sNext": "Next",
+				"sNext": ">",
 	
 	
 				/**
@@ -10548,7 +10548,7 @@
 				 *      } );
 				 *    } );
 				 */
-				"sPrevious": "Previous"
+				"sPrevious": "<"
 			},
 	
 			/**
@@ -10603,7 +10603,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfo": "Showing _START_ to _END_ of _TOTAL_ entries",
+			"sInfo": "Εγγραφές _START_ έως _END_ από _TOTAL_ ",
 	
 	
 			/**
@@ -10624,7 +10624,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoEmpty": "Showing 0 to 0 of 0 entries",
+			"sInfoEmpty": "Εγγραφές 0 έως 0 από 0 ",
 	
 	
 			/**
@@ -10646,7 +10646,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sInfoFiltered": "(filtered from _MAX_ total entries)",
+			"sInfoFiltered": "(αναζήτηση σε _MAX_ συνολικά εγγραφές)",
 	
 	
 			/**
@@ -10813,7 +10813,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sSearch": "Search:",
+			"sSearch": "Αναζήτηση:",
 	
 	
 			/**
@@ -10860,7 +10860,7 @@
 			 *      } );
 			 *    } );
 			 */
-			"sZeroRecords": "No matching records found"
+			"sZeroRecords": "Δεν βρέθηκαν εγγραφές"
 		},
 	
 	

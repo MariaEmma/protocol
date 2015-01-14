@@ -21,6 +21,9 @@ class Usertype extends DataMapper {
         $arr = array(2,5,6,7);
         return $this->where_in('id',$arr)->order_by("id", "asc")->get();
     }
+    function getAllUsertypes(){
+        return $this->order_by("id", "asc")->get();
+    }
    
 
 }

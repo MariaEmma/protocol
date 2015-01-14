@@ -7,8 +7,8 @@
                                 $imagebcd = array(
                                         'src' => MY_IMAGEFOLDER.$typos->logo,
                                         'width'  => '128',
-                                        'alt' => 'Διαχειριστής',
-                                        'title' => 'Διαχειριστής',
+                                        'alt' => $typos->title,
+                                        'title' => $typos->title,
                                         'class'=> 'user-image img-responsive'
                                 );?>
                                 <?php echo img($imagebcd);?>

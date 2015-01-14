@@ -17,7 +17,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <div class="navbar-brand" style="background-color: #A70303; font-size:14px;" >Εφαρμογή Πρωτόκολλου<br/>TEI ΘΕΣΣΑΛΙΑΣ</div> 
+                <div class="navbar-brand" style="background-color: #A70303; font-size:14px;" >Εφαρμογή Πρωτόκολλου<br/>ΤΕΙ ΘΕΣΣΑΛΙΑΣ</div> 
             </div>
   <div class="intro-text"> Καλώς ήλθατε: <span style="font-weight:bold;"><?php echo $user->firstname.' '.$user->lastname; ?></span>, Τελευταία είσοδος :  <?php if ($ldate!=null) echo date("d/m/Y H:i:s", strtotime($ldate));?>&nbsp; <a href="/backend/logout" class="btn btn-danger square-btn-adjust">Αποσύνδεση</a> </div>
         </nav>  
@@ -26,7 +26,7 @@
 
      <?php echo $content; ?>   
 
-    <div style="background-color: #999999; font-family:arial; padding:5px; text-align:center;font-size:12px;">
+    <div style="background-color: #999999; font-family:arial; padding:5px; text-align:center;font-size:12px; ">
 			<strong>Υπεύθυνος:</strong> <a style="color:#fff;" href="http://teilar.academia.edu/TakisHartonas" title="Χρυσάφης Χαρτώνας" target="_blank">Χρυσάφης Χαρτώνας</a>, Καθηγητής<br/>
                         <strong>Ανάπτυξη:</strong> <a style="color:#fff;" href="http://mariaemmanouil.me/" target="_blank" title="Μαρία Εμμανουήλ">Μαρία Εμμανουήλ</a>, <a style="color:#fff;" href="http://www.somweb.gr" title="Χρήστος Σωμαράς" target="_blank">Χρήστος Σωμαράς</a><br/>
 			&copy; <?php echo date('Y') ?> <a style="color:#fff;" href="http://www.teilar.gr" target="_blank">ΤΕΙ Θεσσαλίας</a>

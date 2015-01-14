@@ -107,8 +107,13 @@ class User extends DataMapper {
     function getUserSentFiles($userid){
         return $this->file->where('user_id',$userid)->order_by("created_date","asc")->get();
     }
-    function getUsers(){
+    //xrhstes gia ti diaxeirisi
+    function getAllUsers(){
         return $this->order_by("lastname")->order_by("firstname")->get();
+    }
+    //να φερνει μονο τους χρηστες εκτος διαχειριστή
+    function getUsers(){
+        return $this->where('id >',1)->order_by("lastname")->order_by("firstname")->get();
     }
     function getSchoolUsers(){
         return $this->where('usertype_id',6)->order_by("firstname")->get();

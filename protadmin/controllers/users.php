@@ -29,7 +29,7 @@ class Users extends MY_Controller {
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/adminaccess.php"); 
                 $data['mtitle'] = 'Ενέργειες Διαχειριστή - Χρήστες';
                 $bs = new User();
-                $data['eggrafes'] = $bs->getUsers();
+                $data['eggrafes'] = $bs->getAllUsers();
                 $data['ontotita'] = $data['user'];
                 $this->load->view('users/sidebar',$data);
                 $this->load->view('users/index',$data);
@@ -125,32 +125,43 @@ class Users extends MY_Controller {
 	   {
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
             require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/allaccess.php"); 
-            $data['mtitle'] = 'Ενέργειες Διαχειριστή - Επεξεργασία Χρήστη';
+            
             $data['ontotita'] = $data['user'];
             if((int)$id > 0){
                 if($data['user']->usertype_id == 1){
                     $uri = '/backend/admin';
                     $lview = 'users/sidebar';
+                    $data['mtitle'] = 'Ενέργειες Διαχειριστή - Επεξεργασία Χρήστη';
                 }
                 else if($data['user']->usertype_id == 2){
-                    $uri ='/backend/gram/myown/'.$data['user']->id;
+                    $uri ='/backend/gram/input/'.$data['user']->id;
                     $lview = 'gramfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
                 }
                 else if($data['user']->usertype_id == 3){
-                    $uri ='/backend/protocol/input';
+                    $uri ='/backend/protocol/input/'.$data['user']->id;
                     $lview = 'protfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
                 }
                 else if($data['user']->usertype_id == 4){
-                    $uri ='/backend/president/input';
+                    $uri ='/backend/president/input/'.$data['user']->id;
                     $lview = 'presfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
                 }
                 else if($data['user']->usertype_id == 5){
                     $uri ='/backend/suser/input/'.$data['user']->id;
                     $lview = 'suserfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
+                }
+                else if($data['user']->usertype_id == 6){
+                    $uri ='/backend/school/input/'.$data['user']->id;
+                    $lview = 'schoolfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
                 }
                 else if($data['user']->usertype_id == 7){
                     $uri ='/backend/vicepresident/input/'.$data['user']->id;
                     $lview = 'vicepresfiles/sidebar';
+                    $data['mtitle'] = 'Προφίλ Χρήστη';
                 }
                 else{}
                 
@@ -165,7 +176,10 @@ class Users extends MY_Controller {
             $this->form_validation->set_rules('cnewpass', 'Eπιβεβαίωση νέου κωδικού', 'trim'); 
             $this->form_validation->set_rules('firstname', 'Όνομα', 'trim|required');
             $this->form_validation->set_rules('lastname', 'Επώνυμο', 'trim|required');
+           
+            if($data['user']->usertype_id == 1 && ($bs->usertype_id == 2 || $bs->usertype_id > 4))
             $this->form_validation->set_rules('usertypeid', 'Τύπος Χρήστη', 'checkIfUserIdIsZero');
+            
             $this->form_validation->set_rules('phone', 'Τηλέφωνο', 'trim|required');
             $this->form_validation->set_rules('email', 'Ηλεκτρονική διεύθυνση', 'trim|required|valid_email|emailexist||edit_unique[users.email.'. $bs->id .']');
             $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
@@ -184,19 +198,28 @@ class Users extends MY_Controller {
                 }
                 if($this->input->post('password')!=null)                
                     $bs->passwd = $this->input->post('password');
-                    $bs->usertype_id = $this->input->post('usertypeid');
+                
+                if($data['user']->usertype_id == 1 && ($bs->usertype_id == 2 || $bs->usertype_id > 4))
+                   $bs->usertype_id = $this->input->post('usertypeid');
+                
                     $bs->login_date = date("Y-m-d H:i:s"); 
                     $bs->firstname = $this->input->post('firstname');
                     $bs->lastname = $this->input->post('lastname');
                     $bs->phone = $this->input->post('phone');
                     $bs->email = $this->input->post('email');
+                    
                     if ($bs->usertype_id == 2) {
-                        $bs->school_id = $this->input->post('school_id');
+                        if ($this->input->post('school_id') != null)
+                            $bs->school_id = $this->input->post('school_id');
+                        /*
                         if ($bs->school_id == null) {
-                        $this->session->set_flashdata('msg', '<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!Πρέπει να επιλέξετε τη Σχολή στην οποία ανήκει το τμήμα!</div>');
+                        $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποθήκευσης!Πρέπει να επιλέξετε τη Σχολή στην οποία ανήκει το τμήμα!</div>');
                         redirect('/backend/user/update/'.$id);
-                        }
+                        }*/
                     }
+                    if ($bs->usertype_id != 2) 
+                        $bs->school_id = NULL;
+                    
                     if($bs->save()){
                         $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποθήκευση!</div>');
                         redirect($uri);      

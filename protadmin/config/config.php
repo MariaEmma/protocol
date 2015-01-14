@@ -14,8 +14,8 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://www.protocol.som/';
-//$config['base_url']    = 'http://protfiles.teilar.gr/';
+//$config['base_url']	= 'http://www.protocol.som/';
+$config['base_url']    = 'http://protfiles.teilar.gr/';
 //$config['base_url']    = 'http://www.protocol.mac/';
 /*
 |--------------------------------------------------------------------------
@@ -257,7 +257,7 @@ $config['encryption_key'] = '#5DFR$!srf0$jeKLF|7g5JS$%gp}';
 */
 $config['sess_cookie_name']		= 'ci_session';
 $config['sess_expiration']		= 3600;
-$config['sess_expire_on_close']	= FALSE;
+$config['sess_expire_on_close']	= TRUE;
 $config['sess_encrypt_cookie']	= TRUE;
 $config['sess_use_database']	= FALSE;
 $config['sess_table_name']		= 'ci_sessions';

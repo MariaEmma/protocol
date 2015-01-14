@@ -75,16 +75,16 @@
       paginationNextClass: 'dynatable-page-next',
       paginationActiveClass: 'dynatable-active-page',
       paginationDisabledClass: 'dynatable-disabled-page',
-      paginationPrev: 'Previous',
-      paginationNext: 'Next',
+      paginationPrev: '<',
+      paginationNext: '>',
       paginationGap: [1,2,2,1],
       searchTarget: null,
-      searchPlacement: 'before',
+      searchPlacement: 'πριν',
       perPageTarget: null,
-      perPagePlacement: 'before',
-      perPageText: 'Show: ',
-      recordCountText: 'Showing ',
-      processingText: 'Processing...'
+      perPagePlacement: 'πριν',
+      perPageText: 'Εμφάνιση: ',
+      recordCountText: 'Εγγραφές ',
+      processingText: 'Επεξεργασία...'
     },
     dataset: {
       ajax: false,
@@ -713,13 +713,13 @@
 
       if (recordsShown < recordsQueryCount && settings.features.paginate) {
         var bounds = obj.records.pageBounds();
-        text += "<span class='dynatable-record-bounds'>" + (bounds[0] + 1) + " to " + bounds[1] + "</span> of ";
+        text += "<span class='dynatable-record-bounds'>" + (bounds[0] + 1) + " έως " + bounds[1] + "</span> από ";
       } else if (recordsShown === recordsQueryCount && settings.features.paginate) {
-        text += recordsShown + " of ";
+        text += recordsShown + " εως ";
       }
       text += recordsQueryCount + " " + collection_name;
       if (recordsQueryCount < recordsTotal) {
-        text += " (filtered from " + recordsTotal + " total records)";
+        text += " (αναζήτηση σε " + recordsTotal + " συνολικά εγγραφές)";
       }
 
       return $('<span></span>', {
@@ -1209,7 +1209,7 @@
           $searchSpan = $('<span></span>', {
             id: 'dynatable-search-' + obj.element.id,
             'class': 'dynatable-search',
-            text: 'Search: '
+            text: 'Αναζήτηση: '
           }).append($search);
 
       $search
@@ -1339,7 +1339,7 @@
             (pages + 1) - settings.inputs.paginationGap[3]
           ];
 
-      pageLinks += '<li><span>Pages: </span></li>';
+      pageLinks += '<li><span>Σελίδες: </span></li>';
 
       for (var i = 1; i <= pages; i++) {
         if ( (i > breaks[0] && i < breaks[1]) || (i > breaks[2] && i < breaks[3])) {
