@@ -25,6 +25,9 @@
             <li>
                 <a  href="/backend/category"><i class="fa fa-flag-o fa-2x"></i>Κατηγορίες Αρχειοθέτησης</a>
             </li>
+            <li>
+                <a  href="/backend/group"><i class="fa fa-male fa-2x"></i>Ομάδες Χρηστών</a>
+            </li>
         </ul>
     </div>
 </nav> 		

@@ -30,12 +30,13 @@ class Group extends DataMapper {
         parent::__construct($id);
     }
     
-    function getCategories(){
+    function getAllGroups(){
         return $this->order_by("title")->get();
     }
-    function getFilesOfCategories(){
-        return $this->user_file->get();
+    function getUsersOfGroups(){
+        return $this->user->get();
     }
+    
     
 }
 
