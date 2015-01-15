@@ -103,7 +103,10 @@ $route['backend/category/update/(:num)'] = "categories/update/$1";
 $route['backend/category/new'] = "categories/addnew";
 $route['backend/category'] = "categories/index";
 
+$route['backend/group/newmember/(:num)'] = "groups/newmember/$1";
+$route['backend/group/delmember/(:any)/(:num)'] = "groups/delmember/$1/$2";
 $route['backend/group/delete/(:num)'] = "groups/delete/$1";
+$route['backend/group/view/(:num)'] = "groups/view/$1";
 $route['backend/group/update/(:num)'] = "groups/update/$1";
 $route['backend/group/new'] = "groups/addnew";
 $route['backend/group'] = "groups/index";

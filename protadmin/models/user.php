@@ -10,7 +10,13 @@ class User extends DataMapper {
             'join_self_as' => 'user',		
             'join_other_as' => 'file',		
             'join_table' => 'user_files'),
-    );
+    'group' => array(			
+            'class' => 'group',			
+            'other_field' => 'user',		
+            'join_self_as' => 'user',		
+            'join_other_as' => 'group',		
+            'join_table' => 'group_users'),
+        );
 
     var $table = 'users';
     var $validation = array(
@@ -155,6 +161,8 @@ class User extends DataMapper {
     function getProtocolInputFiles(){
         return $this->file->where('is_protocol',0)->get();
     }
+    
+    
     
 }
 
