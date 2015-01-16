@@ -49,14 +49,19 @@
                                         <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
                                         <?php echo form_error('usersid');?>
                                         <div class="controls">
-                                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "2" data-rel="chosen" style="width:200px"';
-                                            $options=array();
-                                            $allusers = new User();
-                                            $allusers->getUsers();
-                                            foreach($allusers as $oneuser):
-                                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                                            endforeach;
-                                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                                             <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                                                $options=array();
+                                                $groups = new Group();
+                                                $groups-> getAllGroups();
+                                                foreach($groups as $onegroup):
+                                                  $options[$onegroup->id.'-g'] = $onegroup->title;  
+                                                endforeach;
+                                                $allusers = new User();
+                                                $allusers->getUsers();
+                                                foreach($allusers as $oneuser):
+                                                  $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                                                endforeach;
+                                                echo form_dropdown('usersid[]', $options, 0, $js);?>
                                         </div>
                                     </div>
                                     <div class="form-actions" style="padding-top:10px;">

@@ -149,11 +149,22 @@ class Presfiles extends MY_Controller {
             $temp->sender_name = $bs->firstname.' '.$bs->lastname;
             $temp->president_date= date("Y-m-d H:i:s"); 
             $urids = $this->input->post('usersid');
-            
+
             if ($temp->save()){
                 foreach ($urids as $oneid):
+                    if(substr($oneid,-1) == 'g'){
+                        $xsc = explode('-',$oneid);
+                        $groupid =  $xsc[0];
+                        $ngrp = new Group($groupid);
+                        foreach ($ngrp->getUsersOfGroups() as $onusr):
+                            $temp->save($onusr);
+                        endforeach;
+                    }
+                    else{
+                            
                     $receiver = new User($oneid);
                     $temp->save($receiver);
+                    }
                 endforeach;
                
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
@@ -264,8 +275,19 @@ class Presfiles extends MY_Controller {
 
                     if($tempu->save()){ 
                         foreach ($urids as $oneid):
+                            if(substr($oneid,-1) == 'g'){
+                                $xsc = explode('-',$oneid);
+                                $groupid =  $xsc[0];
+                                $ngrp = new Group($groupid);
+                                foreach ($ngrp->getUsersOfGroups() as $onusr):
+                                    $tempu->save($onusr);
+                                endforeach;
+                            }
+                            else{
+
                             $receiver = new User($oneid);
                             $tempu->save($receiver);
+                            }
                         endforeach;
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('/backend/president/protocoled/'.$id);
