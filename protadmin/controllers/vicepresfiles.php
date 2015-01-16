@@ -140,9 +140,20 @@ class Vicepresfiles extends MY_Controller {
                     //end upload
 
                     if($tempu->save()){ 
-                        foreach ($urids as $oneid):
+                       foreach ($urids as $oneid):
+                            if(substr($oneid,-1) == 'g'){
+                                $xsc = explode('-',$oneid);
+                                $groupid =  $xsc[0];
+                                $ngrp = new Group($groupid);
+                                foreach ($ngrp->getUsersOfGroups() as $onusr):
+                                    $tempu->save($onusr);
+                                endforeach;
+                            }
+                            else{
+
                             $receiver = new User($oneid);
                             $tempu->save($receiver);
+                            }
                         endforeach;
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('/backend/vicepresident/protocoled/'.$id);

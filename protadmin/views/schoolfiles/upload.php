@@ -16,14 +16,19 @@
                                  'for' => 'usersid',
                                   ));  ?>
                             <div class="controls">
-                                <?php $js ='id = "usersid" multiple name="usersid" tabindex = "3" data-rel="chosen" style="width:300px"';
-                                $options=array();
-                                $allusers = new User();
-                                $allusers->getUsers();
-                                foreach($allusers as $oneuser):
-                                  $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                                endforeach;
-                                 echo form_dropdown('usersid[]', $options, 0, $js);?>
+                                <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                                    $options=array();
+                                    $groups = new Group();
+                                    $groups-> getAllGroups();
+                                    foreach($groups as $onegroup):
+                                      $options[$onegroup->id.'-g'] = $onegroup->title;  
+                                    endforeach;
+                                    $allusers = new User();
+                                    $allusers->getUsers();
+                                    foreach($allusers as $oneuser):
+                                      $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                                    endforeach;
+                                    echo form_dropdown('usersid[]', $options, 0, $js);?>
                             </div>
                         </div>
                         <div class="form-group">

@@ -51,6 +51,11 @@
                                         <div class="controls">
                                             <?php $js ='id = "usersid" multiple name="usersid" tabindex = "2" data-rel="chosen" style="width:200px"';
                                             $options=array();
+                                            $groups = new Group();
+                                            $groups-> getAllGroups();
+                                            foreach($groups as $onegroup):
+                                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+                                            endforeach;
                                             $allusers = new User();
                                             $allusers->getUsers();
                                             foreach($allusers as $oneuser):
