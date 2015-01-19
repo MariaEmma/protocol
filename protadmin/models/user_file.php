@@ -21,6 +21,7 @@ class User_file extends DataMapper {
         return $this->where('file_id',$fileid)->get();
     }
     
+    
 }
 
 /* End of file user.php */

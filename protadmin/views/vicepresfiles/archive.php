@@ -10,6 +10,16 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                              <?php $cat = new Category();
+                                
+                                foreach ($cat->getCategories() as $onecat) {?>
+                                 
+                                    <a style="padding:10px;margin-bottom:10px;" class="btn btn-default"  title="Αρχειοθετημένα" href="/backend/vicepresident/filter/<?php echo $ontotita->id?>/<?php echo $onecat->id?>">
+                                       <?php echo $onecat->title?>                                           
+                                     </a>
+                                   
+                               <?php }
+                              ?>
                                 <?php if($eggrafes->exists()){ ?>
                             <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
                                 <thead>
