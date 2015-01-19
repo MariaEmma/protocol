@@ -56,10 +56,10 @@ $db['default']['hostname'] = 'localhost';
  
 
 $db['default']['hostname'] = '127.0.0.1';
-// $db['default']['username'] = 'somweb';
-// $db['default']['password'] = 'chr2012ab';
-$db['default']['username'] = 'root';
-$db['default']['password'] = '';
+ $db['default']['username'] = 'somweb';
+ $db['default']['password'] = 'chr2012ab';
+//$db['default']['username'] = 'root';
+//$db['default']['password'] = '';
 $db['default']['database'] = 'protocoldb';
 
  

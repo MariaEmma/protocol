@@ -37,7 +37,7 @@
 | in the URL cannot be matched to a valid route.
 |
 */
-
+$route['backend/suser/filter/(:any)/(:num)'] = "suserfiles/filter/$1/$2";
 $route['backend/suser/store/(:any)/(:num)'] = "suserfiles/store/$1/$2";
 $route['backend/suser/delete/(:num)'] = "suserfiles/delete/$1";
 $route['backend/suser/output/(:num)'] = "suserfiles/output/$1";
@@ -47,7 +47,7 @@ $route['backend/suser/upload/(:any)/(:num)'] = "suserfiles/upload/$1/$2";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
 $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
-$route['backend/vicepresident/filter/(:any)/(:num)'] = "vicepresfiles/filter/$1/2";
+$route['backend/vicepresident/filter/(:any)/(:num)'] = "vicepresfiles/filter/$1/$2";
 $route['backend/vicepresident/changetovicepres'] = "vicepresfiles/changetovicepres";
 $route['backend/vicepresident/store/(:any)/(:num)'] = "vicepresfiles/store/$1/$2";
 $route['backend/vicepresident/delete/(:num)'] = "vicepresfiles/delete/$1";
@@ -58,6 +58,7 @@ $route['backend/vicepresident/upload/(:any)/(:num)'] = "vicepresfiles/upload/$1/
 $route['backend/vicepresident/input/(:num)'] = "vicepresfiles/input/$1";
 $route['backend/vicepresident/archive/(:num)'] = "vicepresfiles/archive/$1";
 
+$route['backend/president/filter/(:any)/(:num)'] = "presfiles/filter/$1/$2";
 $route['backend/president/removeaccess/(:any)/(:num)'] = "presfiles/removeaccess/$1/$2";
 $route['backend/president/grantaccess/(:num)'] = "presfiles/grantaccess/$1";
 $route['backend/president/change/(:num)'] = "presfiles/change/$1";
