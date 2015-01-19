@@ -30,6 +30,7 @@ class Category extends DataMapper {
         return $this->user_file->get();
     }
     
+    
 }
 
 /* End of file user.php */

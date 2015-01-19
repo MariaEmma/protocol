@@ -290,6 +290,22 @@ class Vicepresfiles extends MY_Controller {
             $this->load->view('vicepresfiles/archive',$data); 
             
         }
+        public function filter($id,$catid){
+          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
+            $data['mtitle'] = 'Αρχειοθετημένα αρχεία';
+            $bs = new User($id);
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/vicepresident/input/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs ;
+            $cat = new Category($catid);
+            $data['eggrafes'] = $bs->getUserStoredFiles()->where('category_id',$cat->id)->get();
+
+            $this->load->view('vicepresfiles/sidebar',$data);
+            $this->load->view('vicepresfiles/archive',$data);
+        }
         
    
       

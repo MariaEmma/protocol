@@ -47,6 +47,7 @@ $route['backend/suser/upload/(:any)/(:num)'] = "suserfiles/upload/$1/$2";
 $route['backend/suser/input/(:num)'] = "suserfiles/input/$1";
 $route['backend/suser/archive/(:num)'] = "suserfiles/archive/$1";
 
+$route['backend/vicepresident/filter/(:any)/(:num)'] = "vicepresfiles/filter/$1/2";
 $route['backend/vicepresident/changetovicepres'] = "vicepresfiles/changetovicepres";
 $route['backend/vicepresident/store/(:any)/(:num)'] = "vicepresfiles/store/$1/$2";
 $route['backend/vicepresident/delete/(:num)'] = "vicepresfiles/delete/$1";

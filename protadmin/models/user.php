@@ -154,8 +154,8 @@ class User extends DataMapper {
     function getUserStoredFiles(){
         return $this->file->where('category_id <>','Null')->get();
     }
-    function getUserStoredFilesByCategory($catid){
-        return $this->file->where('category_id',$catid)->get();
+    function getUserStoredFilesByCategory($cid){
+        return $this->file->where('category_id',$cid)->get();
     }
     
     function getProtocolInputFiles(){
