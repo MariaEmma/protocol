@@ -424,6 +424,23 @@ class Presfiles extends MY_Controller {
             $this->load->view('presfiles/archive',$data); 
             
         }
+         public function filter($id,$catid){
+          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/presaccess.php");
+            $data['mtitle'] = 'Αρχειοθετημένα αρχεία';
+            $bs = new User($id);
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/president/input/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs ;
+            $cat = new Category($catid);
+          
+            $data['eggrafes'] = $bs->getUserStoredFilesByCategory($catid);
+
+            $this->load->view('presfiles/sidebar',$data);
+            $this->load->view('presfiles/archive',$data);
+        }
         
    
       

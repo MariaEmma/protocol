@@ -10,7 +10,19 @@
                     <div class="panel-body">
                         <div class="table-responsive">
                             <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
-                                
+                                <a style="padding:10px;margin:15px 5px;" class="btn btn-success"  title="Αρχειοθετημένα" href="/backend/suser/archive/<?php echo $ontotita->id?>">
+                                    <i class="fa fa-archive"></i> Όλα τα αρχεία
+                                </a>
+                                <?php $cat = new Category();
+                                  $allcat =  $cat->getCategories();
+                                  foreach ($allcat->getCategories() as $onecat) :?>
+
+                                      <a style="padding:10px;margin:15px 0px;" class="btn btn-default"  title="Αρχειοθετημένα" href="/backend/suser/filter/<?php echo $ontotita->id?>/<?php echo $onecat->id?>">
+                                         <?php echo $onecat->title?>  
+
+                                       </a>
+
+                                 <?php endforeach; ?>
                                  <?php if($eggrafes->exists()){ ?>
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>

@@ -267,6 +267,23 @@ class Suserfiles extends MY_Controller {
                                   }
              }
     }
+    public function filter($id,$catid){
+          require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/suaccess.php");
+            $data['mtitle'] = 'Αρχειοθετημένα αρχεία';
+            $bs = new User($id);
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+                redirect('backend/suser/input/'.$data['user']->id);
+            }
+            $data['ontotita'] = $bs ;
+            $cat = new Category($catid);
+          
+            $data['eggrafes'] = $bs->getUserStoredFilesByCategory($catid);
+
+            $this->load->view('suserfiles/sidebar',$data);
+            $this->load->view('suserfiles/archive',$data);
+        }
         
    
       

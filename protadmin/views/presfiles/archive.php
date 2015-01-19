@@ -12,36 +12,20 @@
                         
                         
                         <div class="table-responsive">
-                            <div class="bycategory">
-                                <form action="categorychoice.php">
-                                    <select name="categorychoice" onchange="getCategory(this.value)">
-                                        <option>Όλες οι κατηγορίες</option>
-                                        <?php 
-                                        $categories = new Category();
-                                        $categories->getCategories();
-                                        foreach($categories as $onecat): ?>
-                                        <option value="<?php echo $onecat->id?>"><?php echo $onecat->title?></option>;  
-                                     <?php endforeach; ?>
-                                    </select>
-                                </form>
-<!--                         <?php //if(isset($_POST['category_choice'])) $set1 = $_POST['category_choice']; else $set1='';?>   
-                        <?php// echo form_error('category_choice');?>
-                        <div class="controls">
-                            //<?php //$js ='id = "category_choice" name="category_choice" tabindex = "31" data-rel="chosen" style="width:200px"';
-//                            $options=array(0=>'Όλες οι κατηγορίες');
-//                            $categories = new Category();
-//                            $categories->getCategories();
-//                            foreach($categories as $onecat):
-//                              $options[$onecat->id] = $onecat->title;  
-//                            endforeach;
-//                            echo form_dropdown('category_choice', $options, 0, $js);?>
-                        </div>-->
-                    </div>
-                    
-                         <?php echo form_close();?>
-                            </div>
- 
-                          <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                            <div id="dataTables-files_wrapper" class="dataTables_wrapper form-inline" role="grid">
+                                <a style="padding:10px;margin:15px 5px;" class="btn btn-success"  title="Αρχειοθετημένα" href="/backend/president/archive/<?php echo $ontotita->id?>">
+                                    <i class="fa fa-archive"></i> Όλα τα αρχεία
+                                </a>
+                                <?php $cat = new Category();
+                                  $allcat =  $cat->getCategories();
+                                  foreach ($allcat->getCategories() as $onecat) :?>
+
+                                      <a style="padding:10px;margin:15px 0px;" class="btn btn-default"  title="Αρχειοθετημένα" href="/backend/president/filter/<?php echo $ontotita->id?>/<?php echo $onecat->id?>">
+                                         <?php echo $onecat->title?>  
+
+                                       </a>
+
+                                 <?php endforeach; ?>
                                 <?php if($eggrafes->exists()){ ?>
                             <table id="dataTables-archive" class="table table-striped table-bordered table-hover dataTable no-footer">
                                 <thead>

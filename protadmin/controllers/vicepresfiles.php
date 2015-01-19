@@ -301,7 +301,8 @@ class Vicepresfiles extends MY_Controller {
             }
             $data['ontotita'] = $bs ;
             $cat = new Category($catid);
-            $data['eggrafes'] = $bs->getUserStoredFiles()->where('category_id',$cat->id)->get();
+          
+            $data['eggrafes'] = $bs->getUserStoredFilesByCategory($catid);
 
             $this->load->view('vicepresfiles/sidebar',$data);
             $this->load->view('vicepresfiles/archive',$data);
