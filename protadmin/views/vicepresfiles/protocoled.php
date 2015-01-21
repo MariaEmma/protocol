@@ -14,7 +14,7 @@
                         <table id="dataTables-files" class="table table-striped table-bordered table-hover dataTable no-footer">
     <thead>
         <tr role="row">
-            <th class="sorting_asc" scope="col">Περιγραφή</th>
+            <th class="sorting_asc" scope="col">Θέμα</th>
             <th class="sorting" scope="col">Αριθμός πρωτοκόλλου</th>
             <th class="sorting" style="width: 100px;"scope="col">Ημερομηνία πρωτοκόλλου</th>
             <th class="sorting" scope="col">Ενέργειες</th>

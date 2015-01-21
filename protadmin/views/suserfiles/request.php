@@ -16,7 +16,7 @@
                         <div class="form-group">
                             <?php if(isset($_POST['description'])) $set1 = $_POST['description']; else $set1='';?>
                                 <?php echo form_error('description');?> 
-                                <?php echo form_label('Τίτλος-Περιγραφή', 'description', array(
+                                <?php echo form_label('Θέμα', 'description', array(
                                     'for' => 'description',
                                     ));  ?>
                                 <?php echo form_textarea(array(
@@ -24,7 +24,7 @@
                                     'id'          => 'description',
                                     'tabindex'    => '1',
                                     'value'       => $set1,
-                                    'placeholder' => 'Εισάγετε τίτλο - περιγραφή',
+                                    'placeholder' => 'Εισάγετε Θέμα',
                                     'class'       => 'form-control',
                                     'rows'        => '2'
                                  ));?>

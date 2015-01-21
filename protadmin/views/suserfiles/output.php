@@ -16,7 +16,7 @@
     <thead>
         <tr role="row">
             <th class="sorting_asc" scope="col">Προς</th>
-            <th class="sorting" scope="col">Περιγραφή</th>
+            <th class="sorting" scope="col">Θέμα</th>
             <th class="sorting" scope="col">Ημερομηνία αποστολής</th>
             <th class="sorting" scope="col">Ενέργειες</th>
                                          		
