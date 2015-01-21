@@ -85,6 +85,7 @@ $route['backend/gram/delete/(:any)/(:num)'] = "gramfiles/delete/$1/$2";
 $route['backend/gram/upload/(:num)'] = "gramfiles/upload/$1";
 //$route['backend/gram/certified/(:num)'] = "gramfiles/certified/$1";
 $route['backend/gram/input/(:num)'] = "gramfiles/input/$1";
+//$route['backend/gram/output/(:num)'] = "gramfiles/output/$1";
 
 $route['backend/school/certified/(:num)'] = "schoolfiles/certified/$1";
 $route['backend/school/bulkupload/(:num)'] = "schoolfiles/bulkupload/$1";

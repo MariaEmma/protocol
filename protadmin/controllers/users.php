@@ -201,8 +201,7 @@ class Users extends MY_Controller {
                 
                 if($data['user']->usertype_id == 1 && ($bs->usertype_id == 2 || $bs->usertype_id > 4))
                    $bs->usertype_id = $this->input->post('usertypeid');
-                
-                    $bs->login_date = date("Y-m-d H:i:s"); 
+                 
                     $bs->firstname = $this->input->post('firstname');
                     $bs->lastname = $this->input->post('lastname');
                     $bs->phone = $this->input->post('phone');

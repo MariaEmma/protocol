@@ -24,21 +24,21 @@ class Schoolfiles extends MY_Controller {
         $this->load->view('schoolfiles/input',$data); 
 	}
         
-        public function certified($id)
-	{ 
-        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
-        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/schoolaccess.php");
-        $data['mtitle'] = 'Ενέργειες Γραμματείας Σχολής- Πρωτοκολλημένα αρχεία Σχολής';
-        $bs = new User($id);
-        if($id != $data['user']->id){
-            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
-            redirect('backend/school/input/'.$data['user']->id);
-        }
-        $data['ontotita'] = $bs ;
-        $data['eggrafes'] = $bs->getUserWithSchoolprotocolFiles();
-        $this->load->view('schoolfiles/sidebar',$data);
-        $this->load->view('schoolfiles/certified',$data); 
-	}
+//        public function certified($id)
+//	{ 
+//        require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+//        include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/schoolaccess.php");
+//        $data['mtitle'] = 'Ενέργειες Γραμματείας Σχολής- Πρωτοκολλημένα αρχεία Σχολής';
+//        $bs = new User($id);
+//        if($id != $data['user']->id){
+//            $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα προβολής ή διαγραφής των αρχείων αυτού του χρήστη!</div>');            
+//            redirect('backend/school/input/'.$data['user']->id);
+//        }
+//        $data['ontotita'] = $bs ;
+//        $data['eggrafes'] = $bs->getUserWithSchoolprotocolFiles();
+//        $this->load->view('schoolfiles/sidebar',$data);
+//        $this->load->view('schoolfiles/certified',$data); 
+//	}
         
      public function upload($id)
 	{    
@@ -51,7 +51,8 @@ class Schoolfiles extends MY_Controller {
         $data['mtitle'] = 'Ενέργειες Γραμματείας Σχολής - Αποστολή αρχείου';
         $bs = new User($id); 
         $data['ontotita'] = $bs ;
-        
+        $files = new File();
+        $data['eggrafes'] = $files->getLastSentFilesOfUser($bs->id);
         $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
         $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
@@ -106,7 +107,7 @@ class Schoolfiles extends MY_Controller {
                             }
                    endforeach;
                         $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
-                        redirect('/backend/school/input/'.$id);
+                        redirect('/backend/school/upload/'.$id);
                               }
                 else {
                               $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
@@ -233,24 +234,10 @@ class Schoolfiles extends MY_Controller {
             if((int)$id > 0){
                 $bs = new File($id);
                 $ds = new User($userid);
-            $usrfile = new User_file();
-            $usrfileid = $usrfile->getUserFile($userid,$id);
-//            if($bs->is_protocol == 1) {
-//                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αρχείο δεν μπορεί να σβήσει!</div>');
-//                redirect('backend/gram/input/'.$data['user']->id);
-//                }
-           
                
             if($ds->id == $data['user']->id){
-//                if (isset($bs->upload_file))
-//                    {
-//                        $bpath = MY_FILEPATH;
-//                        unlink($bpath.$bs->upload_file);
-//                    }
-//            $bs->delete();
-                
-           $userassign = new User_file($usrfileid);
-           $userassign->delete();
+   
+           $ds->delete($bs);
             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>'); 
             }
             else
