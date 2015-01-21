@@ -121,6 +121,10 @@ class User extends DataMapper {
     function getUsers(){
         return $this->where('id >',1)->order_by("lastname")->order_by("firstname")->get();
     }
+//    //get users only grams and protocol
+//    function getUsersForSchool($id){
+//        return $this->where('id >',1)->where()->order_by("lastname")->order_by("firstname")->get();
+//    }
     function getSchoolUsers(){
         return $this->where('usertype_id',6)->order_by("firstname")->get();
     }

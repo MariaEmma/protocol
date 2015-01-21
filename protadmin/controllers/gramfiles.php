@@ -34,8 +34,11 @@ class Gramfiles extends MY_Controller {
         }
         $data['mtitle'] = 'Ενέργειες Γραμματείας - Αποστολή αρχείου';
         $bs = new User($id); 
+        $files = new File();
+        $data['eggrafes'] = $files->getLastSentFilesOfUser($bs->id);
         $data['ontotita'] = $bs ;
         $school = new User($bs->school_id);
+        $data['school'] = $school;
         $this->form_validation->set_rules('description', 'Περιγραφή','required|trim' );
         $this->form_validation->set_error_delimiters('<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>', '</div>');
        
@@ -75,7 +78,7 @@ class Gramfiles extends MY_Controller {
                 if($tempu->save()){ 
                         $tempu->save($school);
                         $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
-                        redirect('/backend/gram/input/'.$id);
+                        redirect('/backend/gram/upload/'.$id);
                               }
                 else {
                               $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
@@ -93,23 +96,10 @@ class Gramfiles extends MY_Controller {
             if((int)$id > 0){
                 $bs = new File($id);
                 $ds = new User($userid);
-            $usrfile = new User_file();
-            $usrfileid = $usrfile->getUserFile($userid,$id);
-//            if($bs->is_protocol == 1) {
-//                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Το αρχείο δεν μπορεί να σβήσει!</div>');
-//                redirect('backend/gram/input/'.$data['user']->id);
-//                }
                
             if($ds->id == $data['user']->id){
-//                if (isset($bs->upload_file))
-//                    {
-//                        $bpath = MY_FILEPATH;
-//                        unlink($bpath.$bs->upload_file);
-//                    }
-//            $bs->delete();
-                
-           $userassign = new User_file($usrfileid);
-           $userassign->delete();
+   
+           $ds->delete($bs);
             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής διαγραφή!</div>'); 
             }
             else

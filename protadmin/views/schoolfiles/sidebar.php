@@ -19,9 +19,6 @@
                 <a  href="/backend/school/upload/<?php echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Αποστολή Αρχείου</a>
             </li>
             <li>
-                <a  href="/backend/school/certified/<?php echo $ontotita->id;?>"><i class="fa fa-check-circle fa-2x"></i>Πρωτοκολλημενα Σχολής</a>
-            </li>
-            <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
             </li>
         </ul>
