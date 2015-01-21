@@ -79,11 +79,7 @@
                                                             <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
                                                             <td class="center"><a class="btn btn-warning"  title="Προβολή" href="<?php echo MY_FILEFOLDER.$b->upload_file;?>">
                                                                                 <i class="fa fa-download"></i>                                            
-                                                                        </a>
-                                                                        <a class="btn btn-danger"  href="/backend/gram/delete/<?php echo $ontotita->id;?>/<?php echo $b->id;?>" onclick="return confirm('Eίστε σίγουροι για την διαγραφή;')" title="Διαγραφή">
-                                                                                <i class="fa fa-trash-o"></i>
-                                                                        </a>           
-                                                            </td>
+                                                                        </a>                                                                                                                              </td>
                                                         </tr>
                                                         <?php endforeach; ?>
                                                   </tbody>

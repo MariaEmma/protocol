@@ -29,10 +29,6 @@
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
             </li>
             <li>
-                <a  href="/backend/president/archive/<?php echo $ontotita->id;?>"><i class="fa fa-archive fa-2x"></i>Αρχειοθετημένα
-                </a>
-            </li>
-            <li>
                 <a  href="/backend/president/grantaccess/<?php echo $ontotita->id;?>"><i class="fa fa-qrcode fa-2x"></i>Παραχώρηση Δικαιωμάτων
                 </a>
             </li>
