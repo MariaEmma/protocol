@@ -19,6 +19,7 @@
             <th class="sorting" scope="col">Αποστολέας</th>
             <th class="sorting" scope="col">Θέμα</th>
             <th class="sorting" scope="col">Ημερομηνία</th>
+            <th class="sorting" scope="col">Παραλήπτες για προώθηση</th>
             <th class="sorting" scope="col">Επιλέξτε κατηγορία αρχειοθέτησης</th>
             <th class="sorting" scope="col">Αρχείο</th>
                                          		
@@ -30,6 +31,41 @@
                  <td><?php echo $b->sender_name;?></td>
                  <td><?php echo $b->description;?></td>
                  <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  
+                 <td>     
+                    <?php $attributes = array('class'=>'form-horizontal', 'id' => 'presidentsendform'); ?>
+                    <?php echo form_open('backend/suser/send/'.$ontotita->id.'/'.$b->id, $attributes); ?>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
+                        <?php echo form_error('usersid');?>
+                        <div class="controls">
+                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+                            $groups = new Group();
+                            $groups-> getAllGroups();
+                            foreach($groups as $onegroup):
+                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+                            endforeach;
+                            $allusers = new User();
+                            $allusers->getUsers();
+                            foreach($allusers as $oneuser):
+                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                            endforeach;
+                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
+                    <div class="form-actions" style="padding-top:10px;">
+                        <?php echo form_button(array(
+                                        'name' => 'button',
+                                        'id' => 'button',
+                                        'value' => 'true',
+                                        'tabindex' => '2',
+                                        'type' => 'send',
+                                        'content' => '<i class="fa fa-share"></i>',
+                                        'class' => 'btn btn-primary'
+                        )); ?>
+                    </div>
+                         <?php echo form_close();?>
+                 </td>
                  <td>
                        
                         <?php $attributes = array('class'=>'form-horizontal', 'id' => 'requestnewform'); ?>

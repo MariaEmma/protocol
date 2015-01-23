@@ -36,6 +36,10 @@ function getMaxId(){
     function getLastSentFilesOfUser($usrid){
         return $this->where('user_id',$usrid)->limit(10)->order_by('created_date','desc')->get();
     }
+     //get the last 10 sent files of user with uploaded file 
+    function getLastPromotedFilesOfUser($usrid){
+        return $this->where('user_id',$usrid)->where('upload_file <>','NULL')->limit(10)->order_by('created_date','desc')->get();
+    }
     function getFileReceiver(){
         return $this->user->get();
     }

@@ -18,11 +18,11 @@
             <li>
                 <a  href="/backend/suser/request/<?php echo $ontotita->id;?>"><i class="fa fa-bookmark-o fa-2x"></i>Νέο αίτημα για πρωτόκολλο</a>
             </li>
-<!--            <li>
-                <a  href="/backend/suser/output/<?php //echo $ontotita->id;?>"><i class="fa fa-file-text fa-2x"></i>Εξερχόμενα Αρχεία</a>
-            </li>-->
             <li>
                 <a  href="/backend/suser/protocoled/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Πρωτοκολλημένα Αιτήματα</a>
+            </li>
+            <li>
+                <a  href="/backend/suser/output/<?php echo $ontotita->id;?>"><i class="fa fa-external-link fa-2x"></i>Εξερχόμενα Αρχεία</a>
             </li>
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
