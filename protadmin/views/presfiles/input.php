@@ -16,7 +16,7 @@
     <thead>
         <tr role="row">
             
-            <th class="sorting" scope="col">Αποστολέας</th>
+            <th class="sorting" style="width: 100px" scope="col">Αποστολέας</th>
             <th class="sorting" scope="col">Θέμα</th>
             <th class="sorting" scope="col">Ημερομηνία</th>   
             <th class="sorting" scope="col">Παραλήπτες για προώθηση</th>
@@ -34,6 +34,66 @@
                 <td>     
                     <?php $attributes = array('class'=>'form-horizontal', 'id' => 'presidentsendform'); ?>
                     <?php echo form_open('backend/president/send/'.$ontotita->id.'/'.$b->id, $attributes); ?>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
+                        <?php echo form_error('usersid');?>
+                        <div class="controls">
+                          Αντιπρόεδροι
+                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+                            $groups = new Group();
+                            $groups-> getAllGroups();
+                            foreach($groups as $onegroup):
+                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+                            endforeach;
+                            $allusers = new User();
+                            $allusers->getUsers();
+                            foreach($allusers as $oneuser):
+                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                            endforeach;
+                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
+                        <?php echo form_error('usersid');?>
+                        <div class="controls">
+                            Γραμματεία
+                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+                            $groups = new Group();
+                            $groups-> getAllGroups();
+                            foreach($groups as $onegroup):
+                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+                            endforeach;
+                            $allusers = new User();
+                            $allusers->getUsers();
+                            foreach($allusers as $oneuser):
+                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                            endforeach;
+                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
+                        <?php echo form_error('usersid');?>
+                        <div class="controls">
+                            Διοίκηση
+                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+                            $groups = new Group();
+                            $groups-> getAllGroups();
+                            foreach($groups as $onegroup):
+                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+                            endforeach;
+                            $allusers = new User();
+                            $allusers->getUsers();
+                            foreach($allusers as $oneuser):
+                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                            endforeach;
+                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
                     <div class="control-group" style="padding-top:10px;">
                         <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
                         <?php echo form_error('usersid');?>

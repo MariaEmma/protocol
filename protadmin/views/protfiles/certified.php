@@ -17,9 +17,10 @@
         <tr role="row">
             
             <th class="sorting" scope="col">Αποστολέας</th>
-            <th class="sorting" scope="col">Περιγραφή</th>
-            <th class="sorting" scope="col">Ημερομηνία</th>
-            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th> 
+            <th class="sorting" scope="col">Παραλήπτες</th>
+            <th class="sorting" scope="col">Θέμα</th>
+            <th class="sorting" scope="col">Αριθμός Πρωτοκόλλου</th>
+            <th class="sorting" scope="col">Ημερομηνία</th> 
             <th class="sorting" scope="col">Αρχείο</th> 
         </tr>
       </thead>   
@@ -27,6 +28,11 @@
           <?php foreach ($eggrafes as $b) :?>
             <tr>
                  <td><?php echo $b->sender_name;?></td>
+                 <td><?php $receivers = $b->getFileReceiver();
+                      foreach ($receivers as $onereceiver) {
+                        echo $onereceiver->lastname.' '.$onereceiver->firstname.'<br/>'; 
+                       };?>
+                 </td>
                  <td><?php echo $b->description;?></td>
                  <td><?php echo $b->protocol_no;?></td>
                  <td><?php if ($b->created_date!=null) echo date("d/m/Y", strtotime($b->created_date));?></td>  

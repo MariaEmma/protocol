@@ -97,7 +97,7 @@
                                                             <td><?php 
                                                             $receivers = $b->getFileReceiver();
                                                             foreach ($receivers as $onereceiver) {
-                                                               echo $onereceiver->lastname.' '.$onereceiver->firstname; 
+                                                               echo $onereceiver->lastname.' '.$onereceiver->firstname.'<br/>'; 
                                                             };?>
                                                             </td>
                                                             <td><?php echo $b->description;?></td>

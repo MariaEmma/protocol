@@ -233,7 +233,7 @@ class Vicepresfiles extends MY_Controller {
             }
             $data['ontotita'] = $bs ;
             $files = new File();
-            $data['eggrafes'] = $files->getSentFilesOfUser($bs->id);
+            $data['eggrafes'] = $files->getLastPromotedFilesOfUser($bs->id);
             $this->load->view('vicepresfiles/sidebar',$data);
             $this->load->view('vicepresfiles/output');
 	}
@@ -307,6 +307,66 @@ class Vicepresfiles extends MY_Controller {
             $this->load->view('vicepresfiles/sidebar',$data);
             $this->load->view('vicepresfiles/archive',$data);
         }
+        
+        public function send($id,$fileid)
+	{ 
+       require_once($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vars.php"); 
+            include($_SERVER['DOCUMENT_ROOT']."/protadmin/include/vicepresaccess.php");
+            $data['mtitle'] = 'Εισερχόμενα αρχεία';
+           // get user, file and the connection id
+            $ds = new File($fileid);
+            $bs = new User($id);
+            //redirect if the file is not user's 
+            if($id != $data['user']->id){
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Δεν έχετε δικαιώματα αρχειοθέτησης αυτού του αρχείου!</div>');            
+                redirect('backend/vicepresident/input/'.$data['user']->id);
+             }
+        
+            $data['ontotita'] = $bs ;
+            
+            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
+            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
+
+            if ($this->form_validation->run() == FALSE){                    
+                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
+            }  else{
+            
+            $temp = new File($fileid);
+            $temp->user_id = $bs->id; 
+            $temp->sender_name = $bs->firstname.' '.$bs->lastname;
+            $urids = $this->input->post('usersid');
+
+            if ($temp->save()){
+                foreach ($urids as $oneid):
+                    if(substr($oneid,-1) == 'g'){
+                        $xsc = explode('-',$oneid);
+                        $groupid =  $xsc[0];
+                        $ngrp = new Group($groupid);
+                        foreach ($ngrp->getUsersOfGroups() as $onusr):
+                            $temp->save($onusr);
+                        endforeach;
+                    }
+                    else{
+                            
+                    $receiver = new User($oneid);
+                    $temp->save($receiver);
+                    }
+                endforeach;
+                $bs->delete($ds);
+               
+                            $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
+                            redirect('backend/vicepresident/input/'.$data['user']->id);
+                                  }
+                    else {
+                                  $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
+                                  redirect('/backend/vicepresident/input/'.$data['user']->id);
+                                  }
+             }
+            
+            redirect('backend/vicepresident/input/'.$data['user']->id);
+                             
+        
+       	}
         
    
       

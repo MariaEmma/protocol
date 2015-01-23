@@ -22,9 +22,9 @@
             <li>
                 <a  href="/backend/vicepresident/protocoled/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Πρωτοκολλημένα Αιτήματα</a>
             </li>
-<!--            <li>
-                <a  href="/backend/vicepresident/output/<?php echo $ontotita->id;?>"><i class="fa fa-check-square fa-2x"></i>Εξερχόμενα Αρχεία</a>
-            </li>-->
+            <li>
+                <a  href="/backend/vicepresident/output/<?php echo $ontotita->id;?>"><i class="fa fa-external-link fa-2x"></i>Εξερχόμενα Αρχεία</a>
+            </li>
             
             <li>
                 <a  href="/backend/user/update/<?php echo $ontotita->id;?>"><i class="fa fa-refresh fa-2x"></i>Επεξεργασία προφίλ</a>
