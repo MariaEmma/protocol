@@ -26,19 +26,6 @@
                 $('#dataTables-archive').dataTable();
             });
     </script>
-<!--    <script>
-    $('select').change(function(){
-var categorychoice  = $(this).val();
-    $("tr").each(function () {
-        if ($(this).text().search(new RegExp(categorychoice, "i")) < 0) {
-            $(this).hide();
-        } else {
-            $(this).show();
-        }
-    });
-});
-    
-    </script>-->
 <script>
 $('.inline-editable').editable({
     selector: 'a.editable-click',

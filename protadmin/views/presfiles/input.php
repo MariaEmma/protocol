@@ -37,17 +37,15 @@
                     <div class="control-group" style="padding-top:10px;">
                         <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
                         <?php echo form_error('usersid');?>
+                        
                         <div class="controls">
-                          Αντιπρόεδροι
-                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            <div>Αντιπρόεδροι</div>
+                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px;"';
                             $options=array();
-                            $groups = new Group();
-                            $groups-> getAllGroups();
-                            foreach($groups as $onegroup):
-                              $options[$onegroup->id.'-g'] = $onegroup->title;  
-                            endforeach;
+                            $groupschool = new Group(1);
+                            $options[$groupschool->id.'-g'] = $groupschool->title;  
                             $allusers = new User();
-                            $allusers->getUsers();
+                            $allusers->getAllVicepresidents();
                             foreach($allusers as $oneuser):
                               $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
                             endforeach;
@@ -55,62 +53,77 @@
                         </div>
                     </div>
                     <div class="control-group" style="padding-top:10px;">
-                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
-                        <?php echo form_error('usersid');?>
+                        <?php if(isset($_POST['gramid'])) $set1 = $_POST['gramid']; else $set1='';?>   
+                        <?php echo form_error('gramid');?>
                         <div class="controls">
-                            Γραμματεία
-                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            Γραμματέας
+                            <?php $js ='id = "gramid" multiple name="gramid" tabindex = "31" data-rel="chosen" style="width:200px"';
                             $options=array();
-                            $groups = new Group();
-                            $groups-> getAllGroups();
-                            foreach($groups as $onegroup):
-                              $options[$onegroup->id.'-g'] = $onegroup->title;  
-                            endforeach;
-                            $allusers = new User();
-                            $allusers->getUsers();
-                            foreach($allusers as $oneuser):
-                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                            endforeach;
-                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                            $grammateas = new User(12);
+                            $options[$grammateas->id] = $grammateas->lastname.' '.$grammateas->firstname;  
+                            echo form_dropdown('gramid[]', $options, 0, $js);?>
                         </div>
                     </div>
                     <div class="control-group" style="padding-top:10px;">
-                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
-                        <?php echo form_error('usersid');?>
+                        <?php if(isset($_POST['directorid'])) $set1 = $_POST['directorid']; else $set1='';?>   
+                        <?php echo form_error('directorid');?>
                         <div class="controls">
-                            Διοίκηση
-                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            Δ/ντης ΥΔΜ
+                            <?php $js ='id = "directorid" multiple name="directorid" tabindex = "31" data-rel="chosen" style="width:200px"';
                             $options=array();
-                            $groups = new Group();
-                            $groups-> getAllGroups();
-                            foreach($groups as $onegroup):
-                              $options[$onegroup->id.'-g'] = $onegroup->title;  
-                            endforeach;
-                            $allusers = new User();
-                            $allusers->getUsers();
-                            foreach($allusers as $oneuser):
-                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
-                            endforeach;
-                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                            $director = new User(11);
+                            $options[$director->id] = $director->lastname.' '.$director->firstname;  
+                            echo form_dropdown('directorid[]', $options, 0, $js);?>
                         </div>
                     </div>
                     <div class="control-group" style="padding-top:10px;">
-                        <?php if(isset($_POST['usersid'])) $set1 = $_POST['usersid']; else $set1='';?>   
-                        <?php echo form_error('usersid');?>
+                        <?php if(isset($_POST['schoolsid'])) $set1 = $_POST['schoolsid']; else $set1='';?>   
+                        <?php echo form_error('schoolsid');?>
                         <div class="controls">
-                            <?php $js ='id = "usersid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            Σχολή
+                            <?php $js ='id = "schoolsid" multiple name="schoolsid" tabindex = "31" data-rel="chosen" style="width:200px"';
                             $options=array();
-                            $groups = new Group();
-                            $groups-> getAllGroups();
-                            foreach($groups as $onegroup):
-                              $options[$onegroup->id.'-g'] = $onegroup->title;  
-                            endforeach;
+                            $groupschool = new Group(2);
+                            $options[$groupschool->id.'-g'] = $groupschool->title;  
                             $allusers = new User();
-                            $allusers->getUsers();
+                            $allusers->getSchoolUsers();
                             foreach($allusers as $oneuser):
                               $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
                             endforeach;
-                            echo form_dropdown('usersid[]', $options, 0, $js);?>
+                            echo form_dropdown('schoolsid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['departmentid'])) $set1 = $_POST['departmentid']; else $set1='';?>   
+                        <?php echo form_error('departmentid');?>
+                        <div class="controls">
+                            Τμήμα
+                            <?php $js ='id = "departmentid" multiple name="departmentid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+//                            $groups = new Group();
+//                            $groups-> getAllGroups();
+//                            foreach($groups as $onegroup):
+//                              $options[$onegroup->id.'-g'] = $onegroup->title;  
+//                            endforeach;
+                            $allusers = new User();
+                            $allusers->getDepartmentUsers();
+                            foreach($allusers as $oneuser):
+                              $options[$oneuser->id] = $oneuser->lastname.' '.$oneuser->firstname;  
+                            endforeach;
+                            echo form_dropdown('departmentid[]', $options, 0, $js);?>
+                        </div>
+                    </div>
+                    <div class="control-group" style="padding-top:10px;">
+                        <?php if(isset($_POST['protocolid'])) $set1 = $_POST['protocolid']; else $set1='';?>   
+                        <?php echo form_error('protocolid');?>
+                        <div class="controls">
+                            Πρωτόκολλο
+                            <?php $js ='id = "protocolid" multiple name="usersid" tabindex = "31" data-rel="chosen" style="width:200px"';
+                            $options=array();
+                            $protocol = new User();
+                            $protocol->getUserProtocol();
+                            $options[$protocol->id] = $protocol->lastname.' '.$protocol->firstname;  
+                            echo form_dropdown('protocolid[]', $options, 0, $js);?>
                         </div>
                     </div>
                     <div class="form-actions" style="padding-top:10px;">
