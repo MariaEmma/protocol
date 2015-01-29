@@ -136,12 +136,12 @@ class Presfiles extends MY_Controller {
         
             $data['ontotita'] = $bs ;
             
-            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
-            $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
+//            $this->form_validation->set_rules('usersid', 'Παραλήπτες', 'required|checkIfUserIdIsZero');
+ //           $this->form_validation->set_error_delimiters('<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>', '</div>');
 
-            if ($this->form_validation->run() == FALSE){                    
-                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
-            }  else{
+//            if ($this->form_validation->run() == FALSE){                    
+//                $this->session->set_flashdata('msg', '<div class="alert alert-danger"><button class="close" data-dismiss="alert" type="button">×</button>Επιλέξτε παραλήπτες για την αποστολή του αρχείου!!!</div>');    
+//            }  else{
             
             $temp = new File($fileid);
             $temp->user_id = $bs->id;
@@ -149,8 +149,26 @@ class Presfiles extends MY_Controller {
             $temp->sender_name = $bs->firstname.' '.$bs->lastname;
             $temp->president_date= date("Y-m-d H:i:s"); 
             $urids = $this->input->post('usersid');
+            $gramid = $this->input->post('gramid');
+            $directorid = $this->input->post('directorid');
+            $schoolsids = $this->input->post('schoolsid');
+            $departmentids = $this->input->post('departmentid');
+            $protocolid = $this->input->post('protocolid');
 
             if ($temp->save()){
+                foreach ($protocolid as $onprot):
+                    $protocol = new User($onprot);
+                    $temp->save($protocol);
+                endforeach;
+               foreach ($gramid as $ongram):
+                    $gram = new User($ongram);
+                    $temp->save($gram);
+                endforeach;
+               foreach ($directorid as $ondir):
+                    $director = new User($ondir);
+                    $temp->save($director);
+                endforeach;
+             
                 foreach ($urids as $oneid):
                     if(substr($oneid,-1) == 'g'){
                         $xsc = explode('-',$oneid);
@@ -166,6 +184,36 @@ class Presfiles extends MY_Controller {
                     $temp->save($receiver);
                     }
                 endforeach;
+                foreach ($schoolsids as $oneschoolid):
+                    if(substr($oneschoolid,-1) == 'g'){
+                        $xsc2 = explode('-',$oneschoolid);
+                        $scgroupid =  $xsc2[0];
+                        $nschollgrp = new Group($scgroupid);
+                        foreach ($nschollgrp->getUsersOfGroups() as $onscusr):
+                            $temp->save($onscusr);
+                        endforeach;
+                    }
+                    else{
+                            
+                    $schreceiver = new User($oneschoolid);
+                    $temp->save($schreceiver);
+                    }
+                endforeach;
+                foreach ($departmentids as $ondepeid):
+                    if(substr($ondepeid,-1) == 'g'){
+                        $xsc3 = explode('-',$ondepeid);
+                        $depgroupid =  $xsc3[0];
+                        $depgrp = new Group($depgroupid);
+                        foreach ($depgrp->getUsersOfGroups() as $ondepusr):
+                            $temp->save($ondepusr);
+                        endforeach;
+                    }
+                    else{
+                            
+                    $depreceiver = new User($ondepeid);
+                    $temp->save($depreceiver);
+                    }
+                endforeach;
                
                             $this->session->set_flashdata('msg', '<div class="alert alert-success alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Επιτυχής αποστολή!</div>');
                             redirect('backend/president/input/'.$data['user']->id);
@@ -174,7 +222,7 @@ class Presfiles extends MY_Controller {
                                   $this->session->set_flashdata('msg', '<div class="alert alert-danger alert-dismissable"><button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>Πρόβλημα αποστολής!</div>');
                                   redirect('/backend/president/input/'.$data['user']->id);
                                   }
-             }
+           //  }
             
             redirect('backend/president/input/'.$data['user']->id);
                              

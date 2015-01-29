@@ -223,7 +223,9 @@ color: #8d8888;
 /*==============================================
     MENU STYLES    
     =============================================*/
-
+.president-form{
+    float:right!important;
+}
 
 .user-image {
     margin: 25px auto;

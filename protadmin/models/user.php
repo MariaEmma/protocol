@@ -128,6 +128,9 @@ class User extends DataMapper {
     function getSchoolUsers(){
         return $this->where('usertype_id',6)->order_by("firstname")->get();
     }
+    function getDepartmentUsers(){
+        return $this->where('usertype_id',2)->order_by("firstname")->get();
+    }
     function getUserPresident(){
         return $this->where('usertype_id',4)->get();
     }
